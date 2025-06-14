@@ -214,7 +214,19 @@ export default function Checkout() {
         }),
       });
 
-      const data = await response.json();
+      const responseText = await response.text();
+      console.log("Response status:", response.status);
+      console.log("Response headers:", Object.fromEntries(response.headers.entries()));
+      console.log("Raw response:", responseText);
+
+      let data;
+      try {
+        data = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error("JSON parse error:", parseError);
+        console.error("Failed to parse:", responseText);
+        throw new Error("Resposta inválida do servidor de pagamento");
+      }
 
       if (!response.ok) {
         throw new Error(data.error || "Erro ao processar pagamento");
@@ -239,6 +251,12 @@ export default function Checkout() {
 
     } catch (error: any) {
       console.error("Erro no pagamento:", error);
+      console.error("Erro detalhado:", {
+        message: error.message,
+        stack: error.stack,
+        name: error.name
+      });
+      
       toast({
         title: "Erro no pagamento",
         description: error.message || "Tente novamente em alguns instantes.",

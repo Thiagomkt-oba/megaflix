@@ -61,12 +61,26 @@ export default async function handler(req, res) {
         body: JSON.stringify(pixData)
       });
 
-      data = await response.json();
+      const responseText = await response.text();
+      console.log('4ForPayments Response Status:', response.status);
+      console.log('4ForPayments Response Headers:', Object.fromEntries(response.headers.entries()));
+      console.log('4ForPayments Response Body:', responseText);
 
       if (!response.ok) {
-        console.error('Erro 4ForPayments:', data);
+        console.error('Erro 4ForPayments Status:', response.status);
+        console.error('Erro 4ForPayments Body:', responseText);
         return res.status(400).json({ 
-          error: data.message || 'Erro ao gerar PIX' 
+          error: `Erro ${response.status}: ${responseText}` 
+        });
+      }
+
+      try {
+        data = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('Erro ao parsear JSON:', parseError);
+        console.error('Response body que causou erro:', responseText);
+        return res.status(500).json({ 
+          error: 'Resposta inválida da API de pagamento' 
         });
       }
     }
