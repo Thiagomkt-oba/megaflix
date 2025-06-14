@@ -156,3 +156,26 @@ html {
 .animate-slide-in-right {
   animation: slideInRight 0.6s ease-out;
 }
+
+/* Hide YouTube player UI elements completely */
+.ytp-chrome-top,
+.ytp-title,
+.ytp-title-text,
+.ytp-title-link,
+.ytp-show-cards-title,
+.ytp-watermark,
+.ytp-gradient-top,
+.ytp-chrome-top-buttons,
+.ytp-chrome-controls {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Override YouTube iframe pointer events when using custom controls */
+#youtube-player iframe {
+  pointer-events: none;
+}

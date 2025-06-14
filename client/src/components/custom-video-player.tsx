@@ -43,6 +43,9 @@ export default function CustomVideoPlayer({ videoId, title = "Vídeo", className
           fs: 0,
           cc_load_policy: 0,
           playsinline: 1,
+          title: 0,
+          byline: 0,
+          portrait: 0,
         },
         events: {
           onReady: onPlayerReady,
@@ -154,6 +157,8 @@ export default function CustomVideoPlayer({ videoId, title = "Vídeo", className
       {/* Player do YouTube */}
       <div className="relative aspect-video">
         <div id="youtube-player" className="absolute inset-0 w-full h-full"></div>
+        
+
         
         {/* Loading */}
         {isLoading && (
