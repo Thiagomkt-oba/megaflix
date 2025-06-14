@@ -74,23 +74,23 @@ export default function BenefitsSection() {
           {/* Streaming content collage visualization */}
           <div className="grid grid-cols-2 gap-4 animate-slide-in-right">
             <img 
-              src="https://images.unsplash.com/photo-1489599511986-83e52e1f89e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200" 
-              alt="Ação" 
+              src="https://i.imgur.com/olEmJbR.png" 
+              alt="Filmes de Ação" 
               className="rounded-lg shadow-lg object-cover h-32"
             />
             <img 
-              src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200" 
-              alt="Drama" 
+              src="https://i.imgur.com/l01GwbY.png" 
+              alt="Séries de Drama" 
               className="rounded-lg shadow-lg object-cover h-32"
             />
             <img 
-              src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200" 
-              alt="Anime" 
+              src="https://i.imgur.com/NGC0LNa.png" 
+              alt="Animes" 
               className="rounded-lg shadow-lg object-cover h-32"
             />
             <img 
-              src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200" 
-              alt="Romance" 
+              src="https://i.imgur.com/oEDXBOo.png" 
+              alt="Novelas e TV" 
               className="rounded-lg shadow-lg object-cover h-32"
             />
           </div>
