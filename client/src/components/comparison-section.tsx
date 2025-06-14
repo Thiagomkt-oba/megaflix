@@ -115,9 +115,7 @@ export default function ComparisonSection() {
               onClick={() => scrollToSection('planos')}
               className="bg-netflix-red text-white px-8 py-4 text-lg font-semibold hover:bg-red-700 transition-all transform hover:scale-105"
               size="lg"
-            >
-              Assine Agora e Comece a Economizar!
-            </Button>
+            >Assine Agora!</Button>
           </div>
         </div>
       </div>
