@@ -1,0 +1,79 @@
+Entendido! Aqui está o prompt atualizado com os links das imagens, sem as imagens embutidas:
+
+---
+
+**Prompt para Inteligência Artificial Criar o Site de Vendas**
+
+**Objetivo do Site:**
+Criar um site de vendas para um aplicativo de filmes, séries, doramas, novelas, desenhos e animes. O site deve se inspirar na página inicial da Netflix, destacando os principais conteúdos do aplicativo de maneira visualmente atraente e estratégica, com foco em conversão de vendas. O site precisa transmitir que ele é uma opção melhor do que assinar vários serviços de streaming, destacando o vasto catálogo que contém todos os conteúdos oferecidos pelos principais serviços de streaming.
+
+**Elementos Visuais e Estrutura do Site:**
+
+1. **Cabeçalho:**
+
+   * Logo do aplicativo no topo centralizado.
+   * O logo será o arquivo disponível [aqui](https://imgur.com/HS3c3dM). O logo deve ser apresentado com a cor predominante sendo a do logo.
+   * Menu de navegação simples com os seguintes itens: "Início", "Sobre", "Catálogo", "Planos", "Assine Agora".
+
+2. **Banner Principal:**
+
+   * A imagem de fundo do banner principal deve ser dinâmica, com uma arte que destaque a variedade de conteúdos (filmes, séries, animes, desenhos, doramas, novelas). Utilizar imagens que transmitam modernidade e versatilidade, com tons escuros e sutis, para destacar os conteúdos do catálogo.
+   * Texto chamativo, como "Acesse TODOS os conteúdos que você ama, sem precisar assinar vários serviços. Um único aplicativo, acesso ilimitado."
+   * Botão "Assine Agora" visível e de fácil acesso.
+
+3. **Destaques de Conteúdo:**
+
+   * A página inicial deve ter a seção "Em Alta", com 10 conteúdos de destaque (filmes, séries, animes, desenhos) com imagens e títulos numerados, do jeito que a Netflix faz. As imagens podem ser retiradas do IMDB ou TheMovieDB.
+   * Cada item da lista de "Em Alta" (10 títulos) deve abrir um modal quando clicado, com a capa do filme ou série, descrição curta do conteúdo e um botão "Assine Agora" logo abaixo da descrição.
+
+4. Ofertas de Assinatura:
+
+    A página deve ter uma área estratégica que destaque os planos de assinatura do aplicativo:
+
+     * Plano mensal: R\$ 37,90
+     * Plano anual: R\$ 97
+     * Plano vitalício: R\$ 197
+   * Destacar especialmente os planos anual e vitalício, utilizando cores como laranja ou verde para atrair mais atenção para essas opções. O preço do plano anual (R\$ 97) e do vitalício (R\$ 197) deve ser mais proeminente visualmente, com um texto que sugira mais benefícios e economia a longo prazo.
+
+5. Vantagens do Aplicativo:
+
+   Criar uma seção logo abaixo dos planos que detalha as vantagens de assinar o serviço:
+
+     "Acesse TODOS os conteúdos de todos os streamings em um único lugar."
+      "Sem limites, assista de onde quiser, quando quiser."
+      "Baixe filmes e séries para assistir offline."
+      "Disponível em todos os dispositivos: Celular, TV Box, TV, Computador."
+      Imagens representativas de cada dispositivo (link das imagens fornecido abaixo) ao lado de cada vantagem:
+
+       * Celular Android: [Link da imagem](https://i.imgur.com/olEmJbR.png)
+       * Smart TV: [Link da imagem](https://i.imgur.com/l01GwbY.png)
+       * Computador: [Link da imagem](https://i.imgur.com/NGC0LNa.png)
+       * TV Box: [Link da imagem](https://i.imgur.com/oEDXBOo.png)
+
+6. Seção de Testemunhos:
+
+    Uma seção com depoimentos de usuários fictícios ou de influenciadores, destacando como o aplicativo facilita o acesso ao conteúdo de qualidade. Usar fontes amigáveis e clean, com destaque para as falas e imagens de rostos sorridentes.
+
+7. Rodapé:
+
+    O rodapé deve incluir links para "Sobre", "Política de Privacidade", "Termos de Uso", "Contato", e "Ajuda".
+   Adicionar ícones de redes sociais (Facebook, Instagram, Twitter, YouTube).
+    Link de suporte ao cliente.
+
+Cores e Design:
+
+ Utilizar um esquema de cores sóbrias, com tons escuros predominantes (como preto, cinza e azul escuro), com destaques em cores vibrantes (como laranja e verde) para chamar a atenção para elementos importantes como os botões de ação e os planos de assinatura.
+ Fontes modernas, como Helvetica ou Arial para o corpo do texto, e fontes mais ousadas, como Poppins ou Montserrat, para títulos e botões.
+Funcionalidades do Site:
+
+ O site deve ser responsivo e otimizado para todos os dispositivos (móvel, desktop, tablet).
+ O modal que abre ao clicar nos conteúdos de "Em Alta" deve conter uma imagem grande do filme ou série, uma descrição curta e o botão para assinatura.
+ As imagens do catálogo de "Em Alta" devem ser clicáveis e interativas, levando ao modal com mais informações e link direto para a página de assinatura.
+
+CTA (Call to Action):
+
+ No final de cada seção, sempre incluir um botão claro e chamativo com "Assine Agora", que direciona o usuário para a página de pagamento.
+
+---
+
+Esse é o prompt completo para criar o site de vendas de seu aplicativo, com os links das imagens inclusos!
