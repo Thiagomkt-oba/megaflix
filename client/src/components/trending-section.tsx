@@ -13,7 +13,7 @@ export default function TrendingSection() {
             <span className="text-netflix-red">Em Alta</span> no StreamMax
           </h2>
           
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-4">
             {trendingContent.map((content, index) => (
               <div 
                 key={content.id}
@@ -29,7 +29,7 @@ export default function TrendingSection() {
                 <img 
                   src={content.image} 
                   alt={content.title} 
-                  className="w-full h-80 object-cover rounded-lg shadow-lg"
+                  className="w-full h-60 sm:h-72 md:h-80 object-cover rounded-lg shadow-lg"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent rounded-lg"></div>
                 <div className="absolute bottom-4 left-4 right-4">

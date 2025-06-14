@@ -32,7 +32,7 @@ export default function ContentModal({ content, onClose }: ContentModalProps) {
         
         <div className="relative">
           <img 
-            src={content.image} 
+            src={content.coverImage || content.image} 
             alt={content.title} 
             className="w-full h-64 object-cover rounded-lg mb-4"
           />

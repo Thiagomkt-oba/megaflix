@@ -1,62 +1,72 @@
 export const trendingContent = [
   {
     id: 1,
-    title: "DNA do Crime",
-    image: "https://images.unsplash.com/photo-1489599511986-83e52e1f89e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=600",
-    description: "Um thriller eletrizante que mergulha no mundo da investigação criminal. Acompanhe detetives usando as mais avançadas técnicas forenses para desvendar casos complexos que desafiam a lógica."
+    title: "Como Treinar o Seu Dragão",
+    image: "https://image.tmdb.org/t/p/original/wrNDpIZxuhrklFoN0UjELMSXlit.jpg",
+    coverImage: "https://image.tmdb.org/t/p/original/7HqLLVjdjhXS0Qoz1SgZofhkIpE.jpg",
+    description: "Filho cheio de imaginação, mas negligenciado, do Chefe Stoico, Soluço desafia séculos de tradição quando faz amizade com Banguela, um temido dragão Fúria da Noite. Seu vínculo improvável revela a verdadeira natureza dos dragões, desafiando os próprios fundamentos da sociedade viking. Com a feroz e ambiciosa Astrid e o peculiar ferreiro Bocão Bonarroto ao seu lado, Soluço confronta um mundo dilacerado pelo medo e por mal-entendidos."
   },
   {
     id: 2,
-    title: "Ginny e Georgia",
-    image: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=600",
-    description: "Uma série dramática sobre as complexas relações familiares entre uma mãe jovem e sua filha adolescente, explorando temas de amor, crescimento e descoberta em uma narrativa envolvente."
+    title: "Stranger Things",
+    image: "https://image.tmdb.org/t/p/original/jS3pbMv7CCajFRd52eK77R0scku.jpg",
+    coverImage: "https://image.tmdb.org/t/p/original/2MaumbgBlW1NoPo3ZJO38A6v7OS.jpg",
+    description: "Quando um garoto desaparece, a cidade toda participa nas buscas. Mas o que encontram são segredos, forças sobrenaturais e uma menina."
   },
   {
     id: 3,
-    title: "Alta Hora",
-    image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=600",
-    description: "Um filme de ficção científica que explora os limites da tecnologia e da humanidade em um futuro próximo, onde as decisões tomadas hoje mudam o destino da humanidade para sempre."
+    title: "The Last of Us",
+    image: "https://image.tmdb.org/t/p/original/el1KQzwdIm17I3A6cYPfsVIWhfX.jpg",
+    coverImage: "https://image.tmdb.org/t/p/original/uDgy6hyPd82kOHh6I95FLtLnj6p.jpg",
+    description: "Situado duas décadas após a implosão de nossa sociedade, o drama seguirá Joel, um sobrevivente difícil, que é contratado para contrabandear uma garota de 14 anos chamada Ellie para fora de uma zona de quarentena opressiva. O que começa como um pequeno trabalho logo se torna uma jornada brutal e de partir o coração, já que os dois precisam atravessar os Estados Unidos e dependem um do outro para sobreviver."
   },
   {
     id: 4,
-    title: "K.O.",
-    image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=600",
-    description: "Um documentário inspirador sobre boxeadores que superam adversidades pessoais e sociais para alcançar seus sonhos no ringue, mostrando a força do espírito humano."
+    title: "Round 6",
+    image: "https://image.tmdb.org/t/p/original/6gcHdboppvplmBWxvROc96NJnmm.jpg",
+    coverImage: "https://image.tmdb.org/t/p/original/87mebbBtoWzHV0kILgV6M7yIfun.jpg",
+    description: "Centenas de jogadores falidos aceitam um estranho convite para um jogo de sobrevivência. Um prêmio milionário aguarda, mas as apostas são altas e mortais."
   },
   {
     id: 5,
-    title: "O Jogo da Viúva",
-    image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=600",
-    description: "Um thriller psicológico intenso sobre uma mulher que descobre segredos obscuros sobre seu falecido marido e deve lutar por sua sobrevivência em um jogo mortal de gato e rato."
+    title: "Lilo & Stitch",
+    image: "https://image.tmdb.org/t/p/original/etRDHyD3FszWdMGHVJA5bMXvoem.jpg",
+    coverImage: "https://image.tmdb.org/t/p/original/eCqIpFpYIcZpCBexU3y8BfZKR7f.jpg",
+    description: "Stitch, um alienígena, chega ao planeta Terra após fugir de sua prisão e tenta se passar por um cachorro para se camuflar. As coisas mudam quando Lilo, uma travessa menina, o adota de um abrigo de animais. Juntos, eles aprendem os valores da amizade e família."
   },
   {
     id: 6,
-    title: "Territorial",
-    image: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=600",
-    description: "Uma série de ação que acompanha agentes especiais protegendo fronteiras em situações de extremo perigo, com cenas de ação de tirar o fôlego e estratégias militares elaboradas."
+    title: "Missão Impossível: O Acerto Final",
+    image: "https://image.tmdb.org/t/p/original/yKQjrwgEkPOGel3JKT2neJzu0jh.jpg",
+    coverImage: "https://image.tmdb.org/t/p/original/zjRGMFGm7yP4vLnTGRjrmO28hW4.jpg",
+    description: "Depois de escapar de um acidente de trem calamitoso, Ethan percebe que a Entidade está escondida a bordo de um antigo submarino russo, mas um inimigo do seu passado chamado Gabriel também está no encalço."
   },
   {
     id: 7,
-    title: "Demon Slayer",
-    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=600",
-    description: "Um anime épico sobre um jovem guerreiro em sua jornada para salvar sua irmã e proteger a humanidade de demônios ancestrais, combinando ação intensa com momentos emocionantes."
+    title: "Demolidor Renascido",
+    image: "https://image.tmdb.org/t/p/original/eODcpeaj6jFoVG1kBVpNFyFh45I.jpg",
+    coverImage: "https://image.tmdb.org/t/p/original/m291MEBjhuRqb0nh9ojnm9gzScq.jpg",
+    description: "Matt Murdock, um advogado cego com habilidades fantásticas, luta por justiça através de seu agitado escritório de advocacia, enquanto o ex-chefe do crime Wilson Fisk busca seus próprios empreendimentos políticos e em Nova Iorque. Quando suas identidades passadas começam a emergir, seus caminhos se cruzam perigosamente."
   },
   {
     id: 8,
-    title: "Amor Verdadeiro",
-    image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=600",
-    description: "Uma história romântica tocante que explora os desafios e alegrias do amor verdadeiro através de diferentes gerações, mostrando como o amor transcende o tempo."
+    title: "Dexter: Pecado Original",
+    image: "https://image.tmdb.org/t/p/original/w1iM0vkMz9XVCH1ZBiU3m1288G5.jpg",
+    coverImage: "https://image.tmdb.org/t/p/original/jmcRdwSOb1Bo1snMtxTSWOqbvgR.jpg",
+    description: "Miami, 1991. Quando sua sede de sangue não pode mais ser ignorada, o jovem Dexter Morgan precisa aprender a canalizar sua escuridão interna conforme ele passa de estudante para assassino em série com a orientação de seu pai, Harry."
   },
   {
     id: 9,
-    title: "Casa do Riso",
-    image: "https://images.unsplash.com/photo-1595429035778-c31b6cf3a6bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=600",
-    description: "Uma comédia familiar hilariante que retrata as aventuras e desventuras de uma família excêntrica em situações do dia a dia, garantindo risadas para toda a família."
+    title: "O Dia do Chacal",
+    image: "https://image.tmdb.org/t/p/original/9So7vXZMXg16JHTxSGfzM8NaShl.jpg",
+    coverImage: "https://image.tmdb.org/t/p/original/enVrO8TRkdT8dmYXTfI4sEjR5Kp.jpg",
+    description: "Um atirador de elite, um mestre dos disfarces, um assassino treinado – Chacal é um assassino que mata friamente mediante um pagamento. Após o ataque contra um político famoso e importante, Chacal recebe o trabalho mais arriscado de todos, mas que pagará o suficiente para que ele largue essa vida de vez. Só que seu trabalho atraiu a atenção de Bianca, uma policial da inteligência britânica tenaz e com uma grande experiência em armas de fogo."
   },
   {
     id: 10,
-    title: "Natureza Selvagem",
-    image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=600",
-    description: "Um documentário deslumbrante que captura a beleza e brutalidade da vida selvagem em seus habitats naturais ao redor do mundo, com imagens de tirar o fôlego."
+    title: "Avatar: O Último Dobrador de Ar",
+    image: "https://image.tmdb.org/t/p/original/9xjiXjZMngCvLMfMa9Zm1n5cXcY.jpg",
+    coverImage: "https://image.tmdb.org/t/p/original/AnsSKOGreyYKZWKqsClIymlI2JL.jpg",
+    description: "Em um mundo onde pessoas dominam os elementos da natureza, um jovem Avatar deve dominar todos os quatro elementos para salvar seu mundo da guerra."
   }
 ];
