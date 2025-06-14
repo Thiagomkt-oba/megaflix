@@ -67,7 +67,7 @@ export default function PixPaymentModal({ isOpen, onClose, paymentData }: PixPay
         />
       )}
       
-      <DialogContent className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-[90vw] max-w-md bg-netflix-dark border border-gray-600 rounded-2xl shadow-2xl"
+      <DialogContent className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-[90vw] max-w-md max-h-[85vh] overflow-y-auto bg-netflix-dark border border-gray-600 rounded-2xl shadow-2xl"
         onPointerDownOutside={(e) => e.preventDefault()}
       >
         <DialogHeader className="text-center p-6 pb-4 border-b border-gray-700">
@@ -89,7 +89,7 @@ export default function PixPaymentModal({ isOpen, onClose, paymentData }: PixPay
           </div>
         </DialogHeader>
 
-        <div className="p-6 space-y-6">
+        <div className="p-4 space-y-4">
           {/* Instrução Principal */}
           <div className="text-center">
             <p className="text-gray-300 text-sm">
@@ -100,20 +100,20 @@ export default function PixPaymentModal({ isOpen, onClose, paymentData }: PixPay
           {/* QR Code */}
           <div className="flex justify-center">
             {paymentData.qrCode && (
-              <div className="bg-white p-4 rounded-lg">
+              <div className="bg-white p-3 rounded-lg">
                 <img 
                   src={paymentData.qrCode} 
                   alt="QR Code PIX" 
-                  className="w-48 h-48"
+                  className="w-40 h-40"
                 />
               </div>
             )}
           </div>
 
           {/* Código PIX */}
-          <div className="bg-gray-800 p-4 rounded-lg border border-gray-600">
+          <div className="bg-gray-800 p-3 rounded-lg border border-gray-600">
             <p className="text-gray-300 text-sm mb-2 font-medium">Código PIX:</p>
-            <div className="bg-gray-900 p-3 rounded border">
+            <div className="bg-gray-900 p-2 rounded border">
               <p className="text-xs font-mono text-white break-all">
                 {paymentData.qrCodeText}
               </p>
@@ -121,18 +121,18 @@ export default function PixPaymentModal({ isOpen, onClose, paymentData }: PixPay
           </div>
 
           {/* Botões de Ação */}
-          <div className="space-y-3">
+          <div className="space-y-2">
             <Button 
               onClick={downloadQRCode}
               variant="outline"
-              className="w-full border-gray-600 text-gray-300 hover:bg-gray-700 hover:border-gray-500 py-3 rounded-lg font-medium"
+              className="w-full border-gray-600 text-gray-300 hover:bg-gray-700 hover:border-gray-500 py-2.5 rounded-lg font-medium"
             >
               Simular pagamento 🔗
             </Button>
             
             <Button 
               onClick={copyPixCode}
-              className={`w-full py-3 rounded-lg font-medium transition-all duration-200 ${
+              className={`w-full py-2.5 rounded-lg font-medium transition-all duration-200 ${
                 copied 
                   ? 'bg-green-600 hover:bg-green-700 text-white' 
                   : 'bg-green-600 hover:bg-green-700 text-white'
@@ -153,8 +153,8 @@ export default function PixPaymentModal({ isOpen, onClose, paymentData }: PixPay
           </div>
 
           {/* Tutorial de Pagamento */}
-          <div className="bg-blue-900/20 border border-blue-700/30 rounded-lg p-4">
-            <h4 className="text-blue-300 font-medium text-sm mb-3">Como pagar com PIX:</h4>
+          <div className="bg-blue-900/20 border border-blue-700/30 rounded-lg p-3">
+            <h4 className="text-blue-300 font-medium text-sm mb-2">Como pagar com PIX:</h4>
             <ol className="text-xs text-gray-300 space-y-1">
               <li>1. Abra o app do seu banco</li>
               <li>2. Escolha a opção "PIX"</li>
@@ -166,7 +166,7 @@ export default function PixPaymentModal({ isOpen, onClose, paymentData }: PixPay
           </div>
 
           {/* Aviso */}
-          <div className="text-center space-y-2">
+          <div className="text-center space-y-1">
             <p className="text-xs text-gray-400">Fique atento!</p>
             <p className="text-xs text-gray-400">
               • Você receberá um e-mail informando se o pagamento foi aprovado
@@ -174,7 +174,7 @@ export default function PixPaymentModal({ isOpen, onClose, paymentData }: PixPay
           </div>
 
           {/* Footer */}
-          <div className="text-center pt-4 border-t border-gray-700">
+          <div className="text-center pt-3 border-t border-gray-700">
             <p className="text-xs text-gray-500">
               Powered by Megaflix
             </p>
