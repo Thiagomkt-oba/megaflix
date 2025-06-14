@@ -32,13 +32,14 @@ export default function TrendingSection() {
               <h3 className="text-2xl font-bold mb-4 text-white">
                 Veja como funciona o Megaflix
               </h3>
-              <div className="bg-gray-800 rounded-lg p-8 text-gray-400">
-                <p className="text-lg">
-                  Espaço reservado para vídeo demonstrativo do YouTube
-                </p>
-                <p className="text-sm mt-2">
-                  (Substitua este conteúdo pelo embed do vídeo)
-                </p>
+              <div className="relative aspect-video bg-gray-800 rounded-lg overflow-hidden">
+                <iframe
+                  src="https://www.youtube.com/embed/hK9GKp_8i6w"
+                  title="Megaflix - Como funciona"
+                  className="absolute inset-0 w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                ></iframe>
               </div>
             </div>
           </div>
