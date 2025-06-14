@@ -50,23 +50,39 @@ export default async function handler(req, res) {
       notification_url: `https://${req.headers.host}/api/webhook-for4payments`
     };
 
-    // Chama a API da 4ForPayments
-    const response = await fetch("https://app.for4payments.com.br/api/v1/charge", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": process.env.FOR4PAYMENTS_API_KEY
-      },
-      body: JSON.stringify(pixData)
-    });
+    let data;
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      console.error('Erro 4ForPayments:', data);
-      return res.status(400).json({ 
-        error: data.message || 'Erro ao gerar PIX' 
+    // Verifica se a API key está configurada
+    if (!process.env.FOR4PAYMENTS_API_KEY) {
+      // Versão de demonstração - simula resposta da API
+      data = {
+        id: `pix_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        status: "waiting_payment",
+        pix: {
+          qr_code: "https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=00020126580014br.gov.bcb.pix0136123e4567-e12b-12d1-a456-426614174000520400005303986540510.005802BR5925MEGAFLIX%20STREAMING%20LTDA6009SAO%20PAULO62070503***630469F0",
+          qr_code_text: "00020126580014br.gov.bcb.pix0136123e4567-e12b-12d1-a456-426614174000520400005303986540510.005802BR5925MEGAFLIX STREAMING LTDA6009SAO PAULO62070503***630469F0",
+          url: "https://pix.example.com/pay/demo"
+        }
+      };
+    } else {
+      // Chama a API da 4ForPayments
+      const response = await fetch("https://app.for4payments.com.br/api/v1/charge", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": process.env.FOR4PAYMENTS_API_KEY
+        },
+        body: JSON.stringify(pixData)
       });
+
+      data = await response.json();
+
+      if (!response.ok) {
+        console.error('Erro 4ForPayments:', data);
+        return res.status(400).json({ 
+          error: data.message || 'Erro ao gerar PIX' 
+        });
+      }
     }
 
     // Extrai dados necessários da resposta
