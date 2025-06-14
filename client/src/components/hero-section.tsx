@@ -13,9 +13,9 @@ export default function HeroSection() {
     <section id="inicio" className="relative min-h-screen flex items-center">
       <div className="absolute inset-0 gradient-overlay z-10"></div>
       <div 
-        className="absolute inset-0 bg-cover bg-center opacity-30" 
+        className="absolute inset-0 bg-cover bg-center opacity-40 blur-sm" 
         style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1489599511986-83e52e1f89e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')"
+          backgroundImage: "url('https://cdn.ome.lt/Bg7BmWpN0oRebGN7imbALl-CmMc=/987x0/smart/uploads/conteudo/fotos/BANNER_SITE_FILMES_2025_lSjPSQd.png')"
         }}
       ></div>
       
