@@ -6,6 +6,7 @@ import ComparisonSection from "@/components/comparison-section";
 import BenefitsSection from "@/components/benefits-section";
 import TestimonialsSection from "@/components/testimonials-section";
 import Footer from "@/components/footer";
+import SupportChat from "@/components/support-chat";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
         <TestimonialsSection />
       </main>
       <Footer />
+      <SupportChat />
     </div>
   );
 }
