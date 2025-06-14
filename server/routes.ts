@@ -233,6 +233,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         cpf: customer.document.replace(/\D/g, ''),
         phone: customer.phone?.replace(/\D/g, '') || '',
         paymentMethod: "PIX",
+        amount: Math.round(amount * 100), // Converte para centavos
+        traceable: true,
+        items: items.map(item => ({
+          unitPrice: Math.round((item.priceInCents || amount * 100) / (item.quantity || 1)),
+          title: item.name,
+          quantity: item.quantity || 1,
+          tangible: false
+        })),
         cep: "01000000",
         street: "Rua Exemplo",
         number: "123",
@@ -337,6 +345,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         cpf: customer.document.replace(/\D/g, ''),
         phone: customer.phone?.replace(/\D/g, '') || '',
         paymentMethod: "CREDIT_CARD",
+        amount: Math.round(amount * 100), // Converte para centavos
+        traceable: true,
+        items: items.map(item => ({
+          unitPrice: Math.round((item.priceInCents || amount * 100) / (item.quantity || 1)),
+          title: item.name,
+          quantity: item.quantity || 1,
+          tangible: false
+        })),
         creditCard: {
           number: card.number.replace(/\D/g, ''),
           holder_name: card.holderName,
