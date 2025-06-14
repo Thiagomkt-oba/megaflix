@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { CreditCard, QrCode, Loader2, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useLocation } from "wouter";
 
 interface FormData {
   nome: string;
@@ -44,6 +45,7 @@ export default function Checkout() {
   const [isLoading, setIsLoading] = useState(false);
   const [paymentResponse, setPaymentResponse] = useState<PaymentResponse | null>(null);
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
 
   const validateCPF = (cpf: string): boolean => {
     const cleanCPF = cpf.replace(/\D/g, '');
@@ -218,13 +220,21 @@ export default function Checkout() {
         throw new Error(data.error || "Erro ao processar pagamento");
       }
 
-      setPaymentResponse(data);
+      // Armazena dados do pagamento no localStorage
+      const paymentData = {
+        ...data,
+        paymentMethod: formData.paymentMethod
+      };
+      localStorage.setItem('paymentData', JSON.stringify(paymentData));
+      
+      // Redireciona para página de sucesso
+      setLocation('/payment-success');
       
       toast({
         title: "Pagamento iniciado!",
         description: formData.paymentMethod === "pix" 
-          ? "Use o QR Code ou código PIX para finalizar o pagamento."
-          : "Processando pagamento no cartão...",
+          ? "Redirecionando para finalizar o pagamento PIX..."
+          : "Pagamento aprovado! Redirecionando...",
       });
 
     } catch (error: any) {
