@@ -91,6 +91,10 @@ Megaflix is a modern streaming platform application built with React and Express
 
 Changelog:
 - June 14, 2025. Initial setup
+- June 14, 2025. Integrated ChatGPT-powered support chat with specialized prompt for comprehensive customer service
+- June 14, 2025. Added interactive action buttons in chat (Assinar Agora, Ver Catálogo)
+- June 14, 2025. Fixed testimonials avatars with custom colored initial badges
+- June 14, 2025. Created intelligent fallback system for chat responses
 
 ## User Preferences
 
