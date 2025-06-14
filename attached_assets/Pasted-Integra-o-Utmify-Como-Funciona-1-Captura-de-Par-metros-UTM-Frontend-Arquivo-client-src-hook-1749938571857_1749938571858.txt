@@ -1,0 +1,131 @@
+Integração Utmify - Como Funciona
+1. Captura de Parâmetros UTM (Frontend)
+Arquivo: client/src/hooks/useTracking.ts
+
+interface TrackingParameters {
+  src: string | null;
+  sck: string | null;
+  utm_source: string | null;
+  utm_campaign: string | null;
+  utm_medium: string | null;
+  utm_content: string | null;
+  utm_term: string | null;
+}
+// Captura automática da URL
+const urlParams = new URLSearchParams(window.location.search);
+const params = {
+  src: urlParams.get('src'),
+  utm_source: urlParams.get('utm_source'),
+  utm_campaign: urlParams.get('utm_campaign'),
+  // ... outros parâmetros
+};
+2. Envio para Utmify (API PIX)
+Arquivo: api/create-pix-payment.js
+
+// Quando PIX é criado (waiting_payment)
+if (process.env.UTMIFY_API_TOKEN) {
+  const utmifyOrderData = {
+    orderId: pixData.id,
+    platform: "SaboresDeMinas",
+    paymentMethod: "pix",
+    status: "waiting_payment", // Status inicial
+    customer: {
+      name: nome,
+      email: email,
+      phone: telefone,
+      document: cpf,
+      country: "BR",
+      ip: req.headers['x-forwarded-for']
+    },
+    products: [{
+      id: "conjunto-3-manteigas",
+      name: "Conjunto 3 Manteigas Sabores de Minas",
+      quantity: 1,
+      priceInCents: amountInCents
+    }],
+    trackingParameters: {
+      src: urlParams.get('src'),
+      utm_source: urlParams.get('utm_source'),
+      utm_campaign: urlParams.get('utm_campaign'),
+      utm_medium: urlParams.get('utm_medium'),
+      utm_content: urlParams.get('utm_content'),
+      utm_term: urlParams.get('utm_term')
+    },
+    commission: {
+      totalPriceInCents: amountInCents,
+      gatewayFeeInCents: Math.round(amountInCents * 0.05),
+      userCommissionInCents: Math.round(amountInCents * 0.95)
+    }
+  };
+  // Envia para Utmify
+  await fetch("https://api.utmify.com.br/api-credentials/orders", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-token": process.env.UTMIFY_API_TOKEN
+    },
+    body: JSON.stringify(utmifyOrderData)
+  });
+}
+3. Atualização via Webhook (Pagamento Confirmado)
+Arquivo: api/webhook-for4payments.js
+
+// Quando pagamento é aprovado
+if (transactionStatus === "APPROVED" && paymentMethod === "PIX") {
+  const utmifyOrderData = {
+    orderId: webhookData.id,
+    status: "paid", // Muda status para pago
+    approvedDate: new Date().toISOString(),
+    // ... mesmos dados do pedido
+  };
+  // Atualiza no Utmify
+  await fetch("https://api.utmify.com.br/api-credentials/orders", {
+    method: "POST",
+    headers: {
+      "x-api-token": process.env.UTMIFY_API_TOKEN
+    },
+    body: JSON.stringify(utmifyOrderData)
+  });
+}
+🔄 Fluxo Completo Utmify + Vercel
+Passo 1: Visitante Chega
+URL: https://saboresfinal.vercel.app?utm_source=facebook&utm_campaign=promocao
+Hook useTracking captura parâmetros
+Salva no localStorage para persistência
+Passo 2: Cliente Finaliza Compra
+Dados enviados para /api/create-pix-payment
+API cria PIX no For4Payments
+Automaticamente envia para Utmify:
+Status: waiting_payment
+Todos os UTMs capturados
+Dados do cliente e produto
+Passo 3: Cliente Paga PIX
+For4Payments notifica via webhook
+/api/webhook-for4payments recebe notificação
+Automaticamente atualiza Utmify:
+Status: paid
+Data de aprovação
+Comissões calculadas
+🔧 Configuração no Vercel
+Variáveis de Ambiente:
+UTMIFY_API_TOKEN=seu_token_utmify
+FOR4PAYMENTS_API_KEY=sua_chave_for4payments
+URLs das APIs:
+PIX Creation: https://exemplo.com/api/create-pix-payment
+Webhook: https://exemplo.com/api/webhook-for4payments
+📊 Dados Rastreados no Utmify
+Informações Capturadas:
+
+UTM Source, Campaign, Medium, Content, Term
+SRC e SCK (parâmetros personalizados)
+IP do cliente
+Dados completos do pedido
+Comissões e taxas
+Timeline completa (criado → pago)
+🎯 Vantagens da Integração
+Tracking Automático - Zero configuração manual
+Attribution Completa - UTMs preservados na jornada
+Webhook Sync - Status atualizado em tempo real
+Comissões Calculadas - 5% gateway, 95% afiliado
+IP Detection - Geolocalização automática
+A integração Utmify está 100% funcional no Vercel e rastreia automaticamente todas as conversões PIX com atribuição completa!

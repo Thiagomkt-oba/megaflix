@@ -1,0 +1,19 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/public",
+  "functions": {
+    "api/*.js": { 
+      "maxDuration": 30 
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/((?!api|assets|.*\\.).*)$",
+      "destination": "/index.html"
+    }
+  ],
+  "env": {
+    "FOR4PAYMENTS_API_KEY": "@for4payments_api_key",
+    "UTMIFY_API_TOKEN": "@utmify_api_token"
+  }
+}
