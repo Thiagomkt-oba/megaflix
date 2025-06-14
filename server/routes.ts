@@ -41,38 +41,49 @@ const faqData = {
 function findBestMatch(userMessage: string): string {
   const message = userMessage.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   
-  // Palavras-chave para cada categoria
-  const keywords = {
-    "planos": ["plano", "preco", "valor", "custa", "quanto", "pagar"],
-    "mensal": ["mensal", "mes", "37"],
-    "anual": ["anual", "ano", "97"],
-    "vitalício": ["vitalicio", "para sempre", "197", "unico"],
-    "filmes": ["filme", "movie"],
-    "séries": ["serie", "series", "novela"],
-    "anime": ["anime", "manga", "naruto", "attack"],
-    "tv": ["canal", "tv", "televisao"],
-    "dispositivos": ["dispositivo", "onde", "computador"],
-    "celular": ["celular", "android", "ios", "app", "aplicativo"],
-    "smarttv": ["smart tv", "chromecast"],
-    "offline": ["offline", "baixar", "download", "sem internet"],
-    "economia": ["economia", "economizar", "comparar"],
-    "não funciona": ["nao funciona", "erro", "problema", "bug"],
-    "instalação": ["instalar", "baixar", "como usar"],
-    "assinar": ["assinar", "como assinar", "pagamento"],
-    "cancelar": ["cancelar", "desistir"]
-  };
+  // Sistema de padrões de perguntas mais inteligente
+  const patterns = [
+    // Filmes
+    { key: "filmes", patterns: ["quantos filme", "filme", "movie", "catalogo de filme"] },
+    { key: "séries", patterns: ["quantas serie", "serie", "novela", "catalogo de serie"] },
+    { key: "anime", patterns: ["anime", "manga", "naruto", "desenho japones"] },
+    { key: "tv", patterns: ["canal", "quantos canal", "tv ao vivo"] },
+    
+    // Planos específicos
+    { key: "mensal", patterns: ["plano mensal", "mensal", "37", "por mes"] },
+    { key: "anual", patterns: ["plano anual", "anual", "97", "por ano"] },
+    { key: "vitalício", patterns: ["plano vitalicio", "vitalicio", "197", "para sempre", "permanente"] },
+    { key: "planos", patterns: ["plano", "preco", "valor", "custa", "quanto", "opcoes", "assinaturas"] },
+    
+    // Dispositivos
+    { key: "celular", patterns: ["celular", "android", "ios", "app", "aplicativo", "mobile"] },
+    { key: "smarttv", patterns: ["smart tv", "tv", "chromecast", "tv box"] },
+    { key: "offline", patterns: ["offline", "baixar", "download", "sem internet"] },
+    { key: "dispositivos", patterns: ["dispositivo", "onde assistir", "compativel"] },
+    
+    // Outras categorias
+    { key: "economia", patterns: ["economia", "economizar", "comparar", "mais barato", "vantagem"] },
+    { key: "assinar", patterns: ["assinar", "como assinar", "pagamento", "comprar", "contratar"] },
+    { key: "não funciona", patterns: ["nao funciona", "erro", "problema", "bug", "ajuda"] },
+    { key: "instalação", patterns: ["instalar", "como usar", "configurar"] },
+    { key: "cancelar", patterns: ["cancelar", "desistir", "parar", "encerrar"] }
+  ];
 
   let bestMatch = "";
   let maxScore = 0;
 
-  for (const [category, words] of Object.entries(keywords)) {
-    const score = words.reduce((acc, word) => {
-      return acc + (message.includes(word) ? 1 : 0);
-    }, 0);
+  for (const { key, patterns } of patterns) {
+    let score = 0;
+    for (const pattern of patterns) {
+      if (message.includes(pattern)) {
+        // Dá pontuação maior para padrões mais específicos
+        score += pattern.split(' ').length;
+      }
+    }
     
     if (score > maxScore) {
       maxScore = score;
-      bestMatch = category;
+      bestMatch = key;
     }
   }
 
