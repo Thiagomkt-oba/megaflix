@@ -71,27 +71,12 @@ export default function BenefitsSection() {
             </ul>
           </div>
           
-          {/* Streaming content collage visualization */}
-          <div className="grid grid-cols-2 gap-4 animate-slide-in-right">
+          {/* Streaming content visualization */}
+          <div className="flex justify-center animate-slide-in-right">
             <img 
-              src="https://i.imgur.com/olEmJbR.png" 
-              alt="Filmes de Ação" 
-              className="rounded-lg shadow-lg object-cover h-32"
-            />
-            <img 
-              src="https://i.imgur.com/l01GwbY.png" 
-              alt="Séries de Drama" 
-              className="rounded-lg shadow-lg object-cover h-32"
-            />
-            <img 
-              src="https://i.imgur.com/NGC0LNa.png" 
-              alt="Animes" 
-              className="rounded-lg shadow-lg object-cover h-32"
-            />
-            <img 
-              src="https://i.imgur.com/oEDXBOo.png" 
-              alt="Novelas e TV" 
-              className="rounded-lg shadow-lg object-cover h-32"
+              src="https://i.imgur.com/GYrRPpM.png" 
+              alt="Catálogo Megaflix" 
+              className="rounded-lg shadow-lg object-cover max-w-full h-auto"
             />
           </div>
         </div>
