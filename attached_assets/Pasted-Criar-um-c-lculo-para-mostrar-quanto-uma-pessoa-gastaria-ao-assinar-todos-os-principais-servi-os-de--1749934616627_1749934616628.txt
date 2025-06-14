@@ -1,0 +1,79 @@
+Criar um cálculo para mostrar quanto uma pessoa gastaria ao assinar todos os principais serviços de streaming individualmente e quanto ela economizaria ao assinar o nosso serviço de acesso ilimitado.
+
+Cálculo do Custo dos Serviços de Streaming:
+
+Assinaturas de plataformas populares de streaming, com valores aproximados mensais em reais:
+
+Netflix (Plano Padrão): R$ 45,90
+
+Amazon Prime Video: R$ 14,90
+
+Disney+: R$ 27,90
+
+HBO Max: R$ 34,90
+
+Apple TV+: R$ 19,90
+
+Paramount+: R$ 19,90
+
+StarzPlay: R$ 29,90
+
+Crunchyroll (para animes): R$ 29,90
+
+Globoplay: R$ 22,90
+
+YouTube Premium (para conteúdo exclusivo): R$ 20,90
+
+Total de Custo de Todos os Serviços de Streaming:
+Somando o valor de todas essas assinaturas mensais:
+R$ 45,90 + R$ 14,90 + R$ 27,90 + R$ 34,90 + R$ 19,90 + R$ 19,90 + R$ 29,90 + R$ 29,90 + R$ 22,90 + R$ 20,90 = R$ 256,00 por mês.
+
+Cálculo de Economia com o Nosso Serviço:
+Agora, mostre ao usuário que ao assinar o nosso serviço por R$ 37,90 por mês (ou outras opções de planos), ele terá acesso a todo o conteúdo de todos esses serviços de streaming, com um único pagamento mensal.
+
+Planos de Assinatura:
+
+Plano Mensal: R$ 37,90
+
+Plano Anual: R$ 97 (economia de 60%)
+
+Plano Vitalício: R$ 197 (economia de 85%)
+
+Economia Comparando com Todos os Serviços:
+
+Assinando mensalmente todos os serviços de streaming juntos: R$ 256,00
+
+Assinando nosso serviço por R$ 37,90/mês: Economia de R$ 218,10 por mês.
+
+Vantagem no Plano Anual:
+
+Assinando o plano anual por R$ 97, o usuário pagaria apenas R$ 8,08 por mês, economizando R$ 247,92 no total por ano.
+
+Vantagem no Plano Vitalício:
+
+Assinando o plano vitalício por R$ 197, o usuário pagaria uma única vez e teria acesso para sempre, economizando R$ 2.532,00 ao longo de 10 anos (comparando com o custo mensal de R$ 256,00 por mês).
+
+Texto de Apresentação para a Página:
+
+Comparando com os Principais Serviços de Streaming
+
+Você sabia que, se assinasse todos os serviços de streaming separadamente, pagaria mais de R$ 250 por mês? Aqui está a comparação:
+
+Custo Total por Mês
+
+Netflix, Amazon Prime, Disney+, HBO Max, Apple TV+, Paramount+, StarzPlay, Crunchyroll, Globoplay e YouTube Premium: R$ 256,00/mês
+
+Nosso Preço Incrível
+
+Acesse todos esses conteúdos por apenas R$ 37,90 por mês.
+Economia de R$ 218,10 por mês!
+
+Ofertas Especiais
+
+Plano Anual: Pague R$ 97 (Economize R$ 247,92 por ano!)
+
+Plano Vitalício: Pague R$ 197 (Economize mais de R$ 2.500 ao longo de 10 anos!)
+
+Com nosso serviço, você tem tudo o que ama em um só lugar, por um preço muito mais acessível. Economize mais de R$ 2.500 ao longo de 10 anos comparado a outros serviços!
+
+Assine Agora e Comece a Economizar!
