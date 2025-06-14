@@ -39,7 +39,7 @@ export default function Footer() {
             <div>
               <div className="text-netflix-red text-2xl font-bold mb-4 flex items-center">
                 <Play className="mr-2 h-6 w-6" />
-                StreamMax
+                Megaflix
               </div>
               <p className="text-gray-400">Todos os conteúdos que você ama, em um só lugar.</p>
             </div>
@@ -87,8 +87,8 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:contato@streammax.com" className="hover:text-white transition-colors">
-                    contato@streammax.com
+                  <a href="mailto:contato@megaflix.com" className="hover:text-white transition-colors">
+                    contato@megaflix.com
                   </a>
                 </li>
                 <li>
@@ -119,7 +119,7 @@ export default function Footer() {
           </div>
           
           <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 StreamMax. Todos os direitos reservados.</p>
+            <p>&copy; 2024 Megaflix. Todos os direitos reservados.</p>
           </div>
         </div>
       </footer>

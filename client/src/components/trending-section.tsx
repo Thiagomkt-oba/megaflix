@@ -23,14 +23,14 @@ export default function TrendingSection() {
       <section id="catalogo" className="py-16 bg-dark-secondary">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center animate-fade-in">
-            <span className="text-netflix-red">Em Alta</span> no StreamMax
+            <span className="text-netflix-red">Em Alta</span> no Megaflix
           </h2>
 
           {/* Espaço para vídeo do YouTube */}
           <div className="mb-12 text-center">
             <div className="bg-dark-primary rounded-xl p-8 max-w-4xl mx-auto">
               <h3 className="text-2xl font-bold mb-4 text-white">
-                Veja como funciona o StreamMax
+                Veja como funciona o Megaflix
               </h3>
               <div className="bg-gray-800 rounded-lg p-8 text-gray-400">
                 <p className="text-lg">

@@ -1,8 +1,8 @@
-# StreamMax - Streaming Platform
+# Megaflix - Streaming Platform
 
 ## Overview
 
-StreamMax is a modern streaming platform application built with React and Express.js. It's designed as a Netflix-like service that provides access to movies, series, anime, cartoons, and novels in a single platform. The application features a responsive design with a dark theme and includes subscription plans, content browsing, and user testimonials.
+Megaflix is a modern streaming platform application built with React and Express.js. It's designed as a Netflix-like service that provides access to movies, series, anime, cartoons, and novels in a single platform. The application features a responsive design with a dark theme and includes subscription plans, content browsing, and user testimonials.
 
 ## System Architecture
 

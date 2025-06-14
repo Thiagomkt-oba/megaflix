@@ -5,7 +5,7 @@ export default function BenefitsSection() {
     <section id="sobre" className="py-16 bg-dark-secondary">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 animate-fade-in">
-          Por que escolher o <span className="text-netflix-red">StreamMax</span>?
+          Por que escolher o <span className="text-netflix-red">Megaflix</span>?
         </h2>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">

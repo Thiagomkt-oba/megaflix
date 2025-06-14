@@ -19,7 +19,7 @@ export default function Header() {
         <div className="flex items-center">
           <div className="text-netflix-red text-3xl font-bold flex items-center">
             <Play className="mr-2 h-8 w-8" />
-            StreamMax
+            Megaflix
           </div>
         </div>
         
