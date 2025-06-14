@@ -19,35 +19,21 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Valor inválido' });
     }
 
-    // Monta o payload para 4ForPayments
+    // Monta o payload correto para 4ForPayments API
     const pixData = {
-      customer: {
-        name: customer.name,
-        email: customer.email,
-        document: customer.document.replace(/\D/g, ''),
-        phone: customer.phone?.replace(/\D/g, '') || ''
-      },
-      billing: {
-        name: customer.name,
-        address: {
-          country: "br",
-          state: "SP",
-          city: "São Paulo",
-          zipcode: "01000000",
-          street: "Rua Exemplo",
-          number: "123",
-          neighborhood: "Centro"
-        }
-      },
-      items: items.map(item => ({
-        name: item.name,
-        quantity: item.quantity || 1,
-        value: Math.round((item.priceInCents || amount * 100) / 100 * 100) // Garante centavos
-      })),
-      payment: {
-        method: "pix"
-      },
-      notification_url: `https://${req.headers.host}/api/webhook-for4payments`
+      name: customer.name,
+      email: customer.email,
+      cpf: customer.document.replace(/\D/g, ''),
+      phone: customer.phone?.replace(/\D/g, '') || '',
+      paymentMethod: "PIX",
+      cep: "01000000",
+      street: "Rua Exemplo",
+      number: "123",
+      district: "Centro",
+      city: "São Paulo",
+      state: "SP",
+      checkoutUrl: `https://${req.headers.host}/checkout`,
+      referrerUrl: req.headers.referer || `https://${req.headers.host}`
     };
 
     let data;
@@ -66,7 +52,7 @@ export default async function handler(req, res) {
       };
     } else {
       // Chama a API da 4ForPayments
-      const response = await fetch("https://app.for4payments.com.br/api/v1/charge", {
+      const response = await fetch("https://app.for4payments.com.br/api/v1/transaction.purchase", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,9 +75,9 @@ export default async function handler(req, res) {
     const paymentResponse = {
       id: data.id,
       status: data.status,
-      qrCode: data.pix?.qr_code,
-      qrCodeText: data.pix?.qr_code_text,
-      pixUrl: data.pix?.url
+      qrCode: data.pixQrCode,
+      qrCodeText: data.pixCode,
+      pixUrl: data.pixQrCode
     };
 
     // Integração com Utmify se configurado

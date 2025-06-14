@@ -27,42 +27,29 @@ export default async function handler(req, res) {
     const [month, year] = card.expiryDate.split('/');
     const fullYear = year.length === 2 ? `20${year}` : year;
 
-    // Monta o payload para 4ForPayments
+    // Monta o payload correto para 4ForPayments API
     const cardData = {
-      customer: {
-        name: customer.name,
-        email: customer.email,
-        document: customer.document.replace(/\D/g, ''),
-        phone: customer.phone?.replace(/\D/g, '') || ''
+      name: customer.name,
+      email: customer.email,
+      cpf: customer.document.replace(/\D/g, ''),
+      phone: customer.phone?.replace(/\D/g, '') || '',
+      paymentMethod: "CREDIT_CARD",
+      creditCard: {
+        number: card.number.replace(/\D/g, ''),
+        holder_name: card.holderName,
+        cvv: card.cvv,
+        expiration_month: month,
+        expiration_year: fullYear,
+        installments: 1
       },
-      billing: {
-        name: customer.name,
-        address: {
-          country: "br",
-          state: "SP",
-          city: "São Paulo",
-          zipcode: "01000000",
-          street: "Rua Exemplo",
-          number: "123",
-          neighborhood: "Centro"
-        }
-      },
-      items: items.map(item => ({
-        name: item.name,
-        quantity: item.quantity || 1,
-        value: Math.round((item.priceInCents || amount * 100) / 100 * 100)
-      })),
-      payment: {
-        method: "credit_card",
-        credit_card: {
-          number: card.number.replace(/\D/g, ''),
-          holder_name: card.holderName,
-          exp_month: parseInt(month),
-          exp_year: parseInt(fullYear),
-          cvv: card.cvv
-        }
-      },
-      notification_url: `https://${req.headers.host}/api/webhook-for4payments`
+      cep: "01000000",
+      street: "Rua Exemplo",
+      number: "123",
+      district: "Centro",
+      city: "São Paulo",
+      state: "SP",
+      checkoutUrl: `https://${req.headers.host}/checkout`,
+      referrerUrl: req.headers.referer || `https://${req.headers.host}`
     };
 
     let data;
@@ -76,7 +63,7 @@ export default async function handler(req, res) {
       };
     } else {
       // Chama a API da 4ForPayments
-      const response = await fetch("https://app.for4payments.com.br/api/v1/charge", {
+      const response = await fetch("https://app.for4payments.com.br/api/v1/transaction.purchase", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
