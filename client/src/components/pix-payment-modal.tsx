@@ -110,6 +110,16 @@ export default function PixPaymentModal({ isOpen, onClose, paymentData }: PixPay
             )}
           </div>
 
+          {/* Código PIX */}
+          <div className="bg-gray-800 p-4 rounded-lg border border-gray-600">
+            <p className="text-gray-300 text-sm mb-2 font-medium">Código PIX:</p>
+            <div className="bg-gray-900 p-3 rounded border">
+              <p className="text-xs font-mono text-white break-all">
+                {paymentData.qrCodeText}
+              </p>
+            </div>
+          </div>
+
           {/* Botões de Ação */}
           <div className="space-y-3">
             <Button 
@@ -140,6 +150,19 @@ export default function PixPaymentModal({ isOpen, onClose, paymentData }: PixPay
                 </>
               )}
             </Button>
+          </div>
+
+          {/* Tutorial de Pagamento */}
+          <div className="bg-blue-900/20 border border-blue-700/30 rounded-lg p-4">
+            <h4 className="text-blue-300 font-medium text-sm mb-3">Como pagar com PIX:</h4>
+            <ol className="text-xs text-gray-300 space-y-1">
+              <li>1. Abra o app do seu banco</li>
+              <li>2. Escolha a opção "PIX"</li>
+              <li>3. Selecione "Pagar com QR Code" ou "Pix Copia e Cola"</li>
+              <li>4. Escaneie o código acima OU cole o código copiado</li>
+              <li>5. Confirme o valor de R$ 37,90</li>
+              <li>6. Autorize o pagamento</li>
+            </ol>
           </div>
 
           {/* Aviso */}
