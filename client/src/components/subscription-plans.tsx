@@ -19,7 +19,7 @@ export default function SubscriptionPlans() {
           Acesso completo a todo nosso catálogo
         </p>
         
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto relative">
           {/* Monthly Plan */}
           <div className="bg-dark-secondary rounded-xl p-8 border border-gray-600 hover:border-gray-500 transition-all animate-slide-in-left">
             <div className="text-center">
@@ -54,8 +54,8 @@ export default function SubscriptionPlans() {
 
           {/* Annual Plan - Highlighted */}
           <div className="bg-gradient-to-b from-netflix-red to-red-700 rounded-xl p-8 transform scale-105 relative animate-fade-in">
-            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-              <span className="bg-yellow-400 text-dark-primary px-4 py-1 rounded-full text-sm font-bold">
+            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
+              <span className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold shadow-lg">
                 MAIS POPULAR
               </span>
             </div>
