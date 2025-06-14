@@ -7,6 +7,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { CreditCard, QrCode, Loader2, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
+import PixPaymentModal from "@/components/pix-payment-modal";
 
 interface FormData {
   nome: string;
@@ -44,6 +45,7 @@ export default function Checkout() {
   
   const [isLoading, setIsLoading] = useState(false);
   const [paymentResponse, setPaymentResponse] = useState<PaymentResponse | null>(null);
+  const [showPixModal, setShowPixModal] = useState(false);
   const { toast } = useToast();
   const [, setLocation] = useLocation();
 
@@ -232,22 +234,29 @@ export default function Checkout() {
         throw new Error(data.error || "Erro ao processar pagamento");
       }
 
-      // Armazena dados do pagamento no localStorage
-      const paymentData = {
-        ...data,
-        paymentMethod: formData.paymentMethod
-      };
-      localStorage.setItem('paymentData', JSON.stringify(paymentData));
-      
-      // Redireciona para página de sucesso
-      setLocation('/payment-success');
-      
-      toast({
-        title: "Pagamento iniciado!",
-        description: formData.paymentMethod === "pix" 
-          ? "Redirecionando para finalizar o pagamento PIX..."
-          : "Pagamento aprovado! Redirecionando...",
-      });
+      setPaymentResponse(data);
+
+      if (formData.paymentMethod === "pix") {
+        // Mostra modal PIX
+        setShowPixModal(true);
+        toast({
+          title: "PIX gerado com sucesso!",
+          description: "Escaneie o QR Code ou copie o código para finalizar o pagamento.",
+        });
+      } else {
+        // Para cartão, redireciona para página de sucesso
+        const paymentData = {
+          ...data,
+          paymentMethod: formData.paymentMethod
+        };
+        localStorage.setItem('paymentData', JSON.stringify(paymentData));
+        setLocation('/payment-success');
+        
+        toast({
+          title: "Pagamento aprovado!",
+          description: "Redirecionando...",
+        });
+      }
 
     } catch (error: any) {
       console.error("Erro no pagamento:", error);
@@ -267,66 +276,7 @@ export default function Checkout() {
     }
   };
 
-  if (paymentResponse && formData.paymentMethod === "pix") {
-    return (
-      <div className="min-h-screen bg-dark-primary py-20">
-        <div className="container mx-auto px-4 max-w-2xl">
-          <Card className="bg-dark-secondary border-gray-600">
-            <CardHeader className="text-center">
-              <div className="flex justify-center mb-4">
-                <CheckCircle className="h-16 w-16 text-green-500" />
-              </div>
-              <CardTitle className="text-2xl text-white">PIX Gerado com Sucesso!</CardTitle>
-              <CardDescription className="text-gray-300">
-                Escaneie o QR Code ou copie o código PIX para finalizar o pagamento
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {paymentResponse.qrCode && (
-                <div className="text-center">
-                  <img 
-                    src={paymentResponse.qrCode} 
-                    alt="QR Code PIX" 
-                    className="mx-auto bg-white p-4 rounded-lg"
-                  />
-                </div>
-              )}
-              
-              {paymentResponse.qrCodeText && (
-                <div>
-                  <Label className="text-white mb-2 block">Código PIX (Copia e Cola):</Label>
-                  <div className="bg-gray-700 p-3 rounded border">
-                    <code className="text-sm text-gray-200 break-all">
-                      {paymentResponse.qrCodeText}
-                    </code>
-                  </div>
-                  <Button
-                    onClick={() => navigator.clipboard.writeText(paymentResponse.qrCodeText!)}
-                    className="mt-2 w-full bg-netflix-red hover:bg-red-700"
-                  >
-                    Copiar Código PIX
-                  </Button>
-                </div>
-              )}
 
-              <div className="text-center pt-4">
-                <p className="text-gray-300 mb-4">
-                  Após o pagamento, seu acesso será liberado automaticamente!
-                </p>
-                <Button
-                  onClick={() => window.location.href = "/"}
-                  variant="outline"
-                  className="border-gray-600 text-gray-300 hover:bg-gray-700"
-                >
-                  Voltar ao Início
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-dark-primary py-20">
@@ -514,6 +464,15 @@ export default function Checkout() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Modal PIX */}
+      {showPixModal && paymentResponse && (
+        <PixPaymentModal
+          isOpen={showPixModal}
+          onClose={() => setShowPixModal(false)}
+          paymentData={paymentResponse}
+        />
+      )}
     </div>
   );
 }
