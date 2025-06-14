@@ -204,6 +204,205 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // API de pagamento PIX
+  app.post("/api/create-pix-payment", async (req, res) => {
+    if (req.method !== 'POST') {
+      return res.status(405).json({ error: 'Method not allowed' });
+    }
+
+    try {
+      const { customer, items, amount } = req.body;
+
+      // Validação dos dados
+      if (!customer?.name || !customer?.email || !customer?.document) {
+        return res.status(400).json({ error: 'Dados do cliente obrigatórios' });
+      }
+
+      if (!items || !Array.isArray(items) || items.length === 0) {
+        return res.status(400).json({ error: 'Itens do pedido obrigatórios' });
+      }
+
+      if (!amount || amount <= 0) {
+        return res.status(400).json({ error: 'Valor inválido' });
+      }
+
+      // Monta o payload correto para 4ForPayments API
+      const pixData = {
+        name: customer.name,
+        email: customer.email,
+        cpf: customer.document.replace(/\D/g, ''),
+        phone: customer.phone?.replace(/\D/g, '') || '',
+        paymentMethod: "PIX",
+        cep: "01000000",
+        street: "Rua Exemplo",
+        number: "123",
+        district: "Centro",
+        city: "São Paulo",
+        state: "SP",
+        checkoutUrl: `https://${req.headers.host}/checkout`,
+        referrerUrl: req.headers.referer || `https://${req.headers.host}`
+      };
+
+      let data;
+
+      // Verifica se a API key está configurada
+      if (!process.env.FOR4PAYMENTS_API_KEY) {
+        // Versão de demonstração - simula resposta da API
+        data = {
+          id: `pix_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+          status: "waiting_payment",
+          pixQrCode: "https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=00020126580014br.gov.bcb.pix0136123e4567-e12b-12d1-a456-426614174000520400005303986540510.005802BR5925MEGAFLIX%20STREAMING%20LTDA6009SAO%20PAULO62070503***630469F0",
+          pixCode: "00020126580014br.gov.bcb.pix0136123e4567-e12b-12d1-a456-426614174000520400005303986540510.005802BR5925MEGAFLIX STREAMING LTDA6009SAO PAULO62070503***630469F0"
+        };
+      } else {
+        // Chama a API da 4ForPayments
+        const response = await fetch("https://app.for4payments.com.br/api/v1/transaction.purchase", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": process.env.FOR4PAYMENTS_API_KEY
+          },
+          body: JSON.stringify(pixData)
+        });
+
+        const responseText = await response.text();
+        console.log('4ForPayments Response Status:', response.status);
+        console.log('4ForPayments Response Headers:', Object.fromEntries(response.headers.entries()));
+        console.log('4ForPayments Response Body:', responseText);
+
+        if (!response.ok) {
+          console.error('Erro 4ForPayments Status:', response.status);
+          console.error('Erro 4ForPayments Body:', responseText);
+          return res.status(400).json({ 
+            error: `Erro ${response.status}: ${responseText}` 
+          });
+        }
+
+        try {
+          data = JSON.parse(responseText);
+        } catch (parseError) {
+          console.error('Erro ao parsear JSON:', parseError);
+          console.error('Response body que causou erro:', responseText);
+          return res.status(500).json({ 
+            error: 'Resposta inválida da API de pagamento' 
+          });
+        }
+      }
+
+      // Extrai dados necessários da resposta
+      const paymentResponse = {
+        id: data.id,
+        status: data.status,
+        qrCode: data.pixQrCode,
+        qrCodeText: data.pixCode,
+        pixUrl: data.pixQrCode
+      };
+
+      res.status(200).json(paymentResponse);
+
+    } catch (error) {
+      console.error('Erro ao criar PIX:', error);
+      res.status(500).json({ 
+        error: 'Erro interno do servidor' 
+      });
+    }
+  });
+
+  // API de pagamento cartão
+  app.post("/api/create-card-payment", async (req, res) => {
+    if (req.method !== 'POST') {
+      return res.status(405).json({ error: 'Method not allowed' });
+    }
+
+    try {
+      const { customer, card, items, amount } = req.body;
+
+      // Validação dos dados
+      if (!customer?.name || !customer?.email || !customer?.document) {
+        return res.status(400).json({ error: 'Dados do cliente obrigatórios' });
+      }
+
+      if (!card?.number || !card?.expiryDate || !card?.cvv || !card?.holderName) {
+        return res.status(400).json({ error: 'Dados do cartão obrigatórios' });
+      }
+
+      // Processa dados do cartão
+      const [month, year] = card.expiryDate.split('/');
+      const fullYear = year.length === 2 ? `20${year}` : year;
+
+      // Monta o payload correto para 4ForPayments API
+      const cardData = {
+        name: customer.name,
+        email: customer.email,
+        cpf: customer.document.replace(/\D/g, ''),
+        phone: customer.phone?.replace(/\D/g, '') || '',
+        paymentMethod: "CREDIT_CARD",
+        creditCard: {
+          number: card.number.replace(/\D/g, ''),
+          holder_name: card.holderName,
+          cvv: card.cvv,
+          expiration_month: month,
+          expiration_year: fullYear,
+          installments: 1
+        },
+        cep: "01000000",
+        street: "Rua Exemplo",
+        number: "123",
+        district: "Centro",
+        city: "São Paulo",
+        state: "SP",
+        checkoutUrl: `https://${req.headers.host}/checkout`,
+        referrerUrl: req.headers.referer || `https://${req.headers.host}`
+      };
+
+      let data;
+
+      // Verifica se a API key está configurada
+      if (!process.env.FOR4PAYMENTS_API_KEY) {
+        // Versão de demonstração - simula resposta da API
+        data = {
+          id: `card_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+          status: "approved"
+        };
+      } else {
+        // Chama a API da 4ForPayments
+        const response = await fetch("https://app.for4payments.com.br/api/v1/transaction.purchase", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": process.env.FOR4PAYMENTS_API_KEY
+          },
+          body: JSON.stringify(cardData)
+        });
+
+        data = await response.json();
+
+        if (!response.ok) {
+          console.error('Erro 4ForPayments:', data);
+          return res.status(400).json({ 
+            error: data.message || 'Erro ao processar cartão' 
+          });
+        }
+      }
+
+      // Extrai dados necessários da resposta
+      const paymentResponse = {
+        id: data.id,
+        status: data.status,
+        authorizationCode: data.authorization_code,
+        transactionId: data.transaction_id
+      };
+
+      res.status(200).json(paymentResponse);
+
+    } catch (error) {
+      console.error('Erro ao processar cartão:', error);
+      res.status(500).json({ 
+        error: 'Erro interno do servidor' 
+      });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
