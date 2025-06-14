@@ -55,9 +55,7 @@ export default function SubscriptionPlans() {
           {/* Annual Plan - Highlighted */}
           <div className="bg-gradient-to-b from-netflix-red to-red-700 rounded-xl p-6 md:p-8 transform md:scale-110 relative animate-fade-in border-4 border-yellow-400 shadow-2xl shadow-yellow-400/50 ring-4 ring-yellow-400/30">
             <div className="absolute -top-4 md:-top-5 left-1/2 transform -translate-x-1/2 z-20">
-              <span className="bg-gradient-to-r from-yellow-400 to-yellow-300 text-black px-4 md:px-6 py-2 md:py-3 rounded-full text-sm md:text-base font-extrabold shadow-2xl animate-pulse border-2 border-yellow-500">
-                🔥 MAIS POPULAR 🔥
-              </span>
+              <span className="bg-gradient-to-r from-yellow-400 to-yellow-300 text-black px-4 md:px-6 py-2 md:py-3 rounded-full text-sm md:text-base font-extrabold shadow-2xl animate-pulse border-2 border-yellow-500">MAIS POPULAR </span>
             </div>
             <div className="text-center pt-4">
               <h3 className="text-3xl font-bold mb-4 text-yellow-100">Plano Anual</h3>
