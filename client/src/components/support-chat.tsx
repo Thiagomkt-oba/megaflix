@@ -138,6 +138,49 @@ export default function SupportChat() {
                 }`}
               >
                 {message.text}
+                {/* Botões de ação para mensagens do bot */}
+                {!message.isUser && (
+                  <div className="mt-2 space-y-1">
+                    {/* Botão Assinar para mensagens sobre planos */}
+                    {(message.text.toLowerCase().includes("assinar") || 
+                      message.text.toLowerCase().includes("plano") ||
+                      message.text.toLowerCase().includes("r$ ")) && (
+                      <Button
+                        onClick={() => {
+                          const element = document.getElementById('planos');
+                          if (element) {
+                            element.scrollIntoView({ behavior: 'smooth' });
+                            setIsOpen(false);
+                          }
+                        }}
+                        className="bg-netflix-red hover:bg-red-700 text-white text-xs px-3 py-1 rounded-full w-full mb-1"
+                        size="sm"
+                      >
+                        Assinar Agora 🚀
+                      </Button>
+                    )}
+                    
+                    {/* Botão Ver Catálogo para mensagens sobre conteúdo */}
+                    {(message.text.toLowerCase().includes("filme") || 
+                      message.text.toLowerCase().includes("série") ||
+                      message.text.toLowerCase().includes("anime") ||
+                      message.text.toLowerCase().includes("canal")) && (
+                      <Button
+                        onClick={() => {
+                          const element = document.getElementById('catalogo');
+                          if (element) {
+                            element.scrollIntoView({ behavior: 'smooth' });
+                            setIsOpen(false);
+                          }
+                        }}
+                        className="bg-gray-600 hover:bg-gray-500 text-white text-xs px-3 py-1 rounded-full w-full"
+                        size="sm"
+                      >
+                        Ver Catálogo 📺
+                      </Button>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           ))}
