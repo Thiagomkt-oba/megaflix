@@ -59,12 +59,17 @@ export default function PixPaymentModal({ isOpen, onClose, paymentData }: PixPay
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl bg-gradient-to-br from-netflix-dark via-purple-900 to-netflix-dark text-white border-netflix-red/20">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-center text-white flex items-center justify-center gap-2">
-            <QrCode className="h-6 w-6 text-green-500" />
+      <DialogContent className="max-w-4xl bg-gradient-to-br from-netflix-dark via-purple-900 to-netflix-dark text-white border-netflix-red/20 rounded-3xl shadow-2xl backdrop-blur-lg">
+        <DialogHeader className="pb-6">
+          <DialogTitle className="text-3xl font-bold text-center text-white flex items-center justify-center gap-3 mb-2">
+            <div className="p-2 bg-green-500/20 rounded-full">
+              <QrCode className="h-8 w-8 text-green-400" />
+            </div>
             PIX Gerado com Sucesso!
           </DialogTitle>
+          <p className="text-gray-300 text-center text-lg">
+            Seu pagamento está quase pronto
+          </p>
         </DialogHeader>
 
         <div className="space-y-6">
@@ -79,31 +84,36 @@ export default function PixPaymentModal({ isOpen, onClose, paymentData }: PixPay
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-8">
             {/* QR Code */}
-            <Card className="bg-white/10 border-white/20">
-              <CardHeader>
-                <CardTitle className="text-white text-center flex items-center justify-center gap-2">
-                  <QrCode className="h-5 w-5" />
+            <Card className="bg-white/10 border-white/20 rounded-2xl shadow-lg backdrop-blur-sm">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-white text-center flex items-center justify-center gap-3 text-xl">
+                  <div className="p-2 bg-blue-500/20 rounded-full">
+                    <QrCode className="h-6 w-6 text-blue-400" />
+                  </div>
                   QR Code PIX
                 </CardTitle>
               </CardHeader>
-              <CardContent className="text-center">
+              <CardContent className="text-center space-y-6">
                 {paymentData.qrCode && (
-                  <div className="bg-white p-4 rounded-lg inline-block mb-4">
+                  <div className="bg-white p-6 rounded-2xl inline-block shadow-xl">
                     <img 
                       src={paymentData.qrCode} 
                       alt="QR Code PIX" 
-                      className="w-48 h-48 mx-auto"
+                      className="w-52 h-52 mx-auto"
                     />
                   </div>
                 )}
-                <div className="space-y-3">
+                <div className="space-y-4">
+                  <p className="text-gray-300 text-sm">
+                    Abra seu app do banco e escaneie o código
+                  </p>
                   <Button 
                     onClick={downloadQRCode}
-                    className="w-full bg-blue-600 hover:bg-blue-700"
+                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
                   >
-                    <Download className="h-4 w-4 mr-2" />
+                    <Download className="h-5 w-5 mr-2" />
                     Baixar QR Code
                   </Button>
                 </div>
@@ -111,80 +121,110 @@ export default function PixPaymentModal({ isOpen, onClose, paymentData }: PixPay
             </Card>
 
             {/* Código PIX Copia e Cola */}
-            <Card className="bg-white/10 border-white/20">
-              <CardHeader>
-                <CardTitle className="text-white text-center flex items-center justify-center gap-2">
-                  <Copy className="h-5 w-5" />
+            <Card className="bg-white/10 border-white/20 rounded-2xl shadow-lg backdrop-blur-sm">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-white text-center flex items-center justify-center gap-3 text-xl">
+                  <div className="p-2 bg-orange-500/20 rounded-full">
+                    <Copy className="h-6 w-6 text-orange-400" />
+                  </div>
                   Código PIX
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="bg-gray-800 p-4 rounded-lg">
-                    <p className="text-sm text-gray-300 mb-2">Código para copiar e colar:</p>
-                    <div className="bg-black/30 p-3 rounded border">
-                      <p className="text-xs font-mono break-all text-white">
-                        {paymentData.qrCodeText}
-                      </p>
-                    </div>
+              <CardContent className="space-y-6">
+                <div className="bg-gray-800/50 p-5 rounded-xl border border-gray-700/50">
+                  <p className="text-sm text-gray-300 mb-3 font-medium">Código para copiar e colar:</p>
+                  <div className="bg-black/40 p-4 rounded-lg border border-gray-600/30">
+                    <p className="text-xs font-mono break-all text-white leading-relaxed">
+                      {paymentData.qrCodeText}
+                    </p>
                   </div>
-                  <Button 
-                    onClick={copyPixCode}
-                    className={`w-full ${copied ? 'bg-green-600 hover:bg-green-700' : 'bg-netflix-red hover:bg-red-700'}`}
-                  >
-                    {copied ? (
-                      <>
-                        <CheckCircle className="h-4 w-4 mr-2" />
-                        Copiado!
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="h-4 w-4 mr-2" />
-                        Copiar Código PIX
-                      </>
-                    )}
-                  </Button>
                 </div>
+                <Button 
+                  onClick={copyPixCode}
+                  className={`w-full py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 ${
+                    copied 
+                      ? 'bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800' 
+                      : 'bg-gradient-to-r from-netflix-red to-red-700 hover:from-red-700 hover:to-red-800'
+                  }`}
+                >
+                  {copied ? (
+                    <>
+                      <CheckCircle className="h-5 w-5 mr-2" />
+                      Código Copiado!
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-5 w-5 mr-2" />
+                      Copiar Código PIX
+                    </>
+                  )}
+                </Button>
               </CardContent>
             </Card>
           </div>
 
           {/* Instruções de Pagamento */}
-          <Card className="bg-blue-600/10 border-blue-600/30">
+          <Card className="bg-gradient-to-r from-blue-600/10 to-purple-600/10 border-blue-600/30 rounded-2xl shadow-lg">
             <CardContent className="pt-6">
-              <h3 className="text-lg font-semibold text-blue-400 mb-4 flex items-center gap-2">
-                <QrCode className="h-5 w-5" />
-                Como pagar com PIX:
+              <h3 className="text-xl font-bold text-blue-400 mb-6 flex items-center justify-center gap-3">
+                <div className="p-2 bg-blue-500/20 rounded-full">
+                  <QrCode className="h-6 w-6" />
+                </div>
+                Como pagar com PIX
               </h3>
-              <ol className="list-decimal list-inside space-y-2 text-gray-300">
-                <li>Abra o app do seu banco ou carteira digital</li>
-                <li>Escolha a opção <strong className="text-white">PIX</strong></li>
-                <li>Escaneie o QR Code <strong className="text-white">OU</strong> copie e cole o código PIX</li>
-                <li>Confirme os dados e o valor <strong className="text-green-400">R$ 37,90</strong></li>
-                <li>Finalize o pagamento</li>
-                <li>Aguarde a confirmação (geralmente instantânea)</li>
-              </ol>
+              <div className="grid md:grid-cols-2 gap-6">
+                <ol className="list-decimal list-inside space-y-3 text-gray-300">
+                  <li className="flex items-start gap-3">
+                    <span className="text-blue-400 font-bold">1.</span>
+                    <span>Abra o app do seu banco ou carteira digital</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-blue-400 font-bold">2.</span>
+                    <span>Escolha a opção <strong className="text-white bg-blue-600/20 px-2 py-1 rounded">PIX</strong></span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-blue-400 font-bold">3.</span>
+                    <span>Escaneie o QR Code <strong className="text-white">OU</strong> copie e cole o código PIX</span>
+                  </li>
+                </ol>
+                <ol className="list-decimal list-inside space-y-3 text-gray-300" start={4}>
+                  <li className="flex items-start gap-3">
+                    <span className="text-blue-400 font-bold">4.</span>
+                    <span>Confirme os dados e o valor <strong className="text-green-400 bg-green-500/20 px-2 py-1 rounded">R$ 37,90</strong></span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-blue-400 font-bold">5.</span>
+                    <span>Finalize o pagamento</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-blue-400 font-bold">6.</span>
+                    <span>Aguarde a confirmação (geralmente instantânea)</span>
+                  </li>
+                </ol>
+              </div>
             </CardContent>
           </Card>
 
           {/* Informações do Pedido */}
-          <Card className="bg-white/5 border-white/10">
+          <Card className="bg-gradient-to-r from-white/5 to-white/10 border-white/20 rounded-2xl shadow-lg">
             <CardContent className="pt-6">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                <div>
-                  <p className="text-gray-400 text-sm">ID do Pedido</p>
-                  <p className="font-mono text-xs text-white">{paymentData.id}</p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div className="bg-white/5 p-4 rounded-xl">
+                  <p className="text-gray-400 text-sm mb-2">ID do Pedido</p>
+                  <p className="font-mono text-xs text-white bg-black/20 px-2 py-1 rounded">
+                    {paymentData.id.substring(0, 8)}...
+                  </p>
                 </div>
-                <div>
-                  <p className="text-gray-400 text-sm">Valor</p>
-                  <p className="font-bold text-green-400">R$ 37,90</p>
+                <div className="bg-green-500/10 p-4 rounded-xl border border-green-500/20">
+                  <p className="text-gray-400 text-sm mb-2">Valor</p>
+                  <p className="font-bold text-green-400 text-lg">R$ 37,90</p>
                 </div>
-                <div>
-                  <p className="text-gray-400 text-sm">Método</p>
+                <div className="bg-blue-500/10 p-4 rounded-xl border border-blue-500/20">
+                  <p className="text-gray-400 text-sm mb-2">Método</p>
                   <p className="font-semibold text-blue-400">PIX</p>
                 </div>
-                <div>
-                  <p className="text-gray-400 text-sm">Status</p>
+                <div className="bg-yellow-500/10 p-4 rounded-xl border border-yellow-500/20">
+                  <p className="text-gray-400 text-sm mb-2">Status</p>
                   <p className="font-semibold text-yellow-400">Aguardando</p>
                 </div>
               </div>
@@ -192,24 +232,24 @@ export default function PixPaymentModal({ isOpen, onClose, paymentData }: PixPay
           </Card>
 
           {/* Botões de Ação */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button 
-              variant="outline" 
-              onClick={onClose}
-              className="border-white/20 text-white hover:bg-white/10"
-            >
-              <X className="h-4 w-4 mr-2" />
-              Fechar
-            </Button>
-            
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <Button 
               onClick={() => {
                 const element = document.getElementById('chat-widget');
                 if (element) element.click();
               }}
-              className="bg-netflix-red hover:bg-red-700"
+              className="bg-gradient-to-r from-netflix-red to-red-700 hover:from-red-700 hover:to-red-800 py-3 px-8 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
             >
-              Precisa de Ajuda?
+              💬 Precisa de Ajuda?
+            </Button>
+            
+            <Button 
+              variant="outline" 
+              onClick={onClose}
+              className="border-2 border-white/30 text-white hover:bg-white/10 hover:border-white/50 py-3 px-8 rounded-xl font-semibold transition-all duration-200"
+            >
+              <X className="h-5 w-5 mr-2" />
+              Fechar
             </Button>
           </div>
 

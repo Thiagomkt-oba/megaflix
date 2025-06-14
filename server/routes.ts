@@ -235,7 +235,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         paymentMethod: "PIX",
         amount: Math.round(amount * 100), // Converte para centavos
         traceable: true,
-        items: items.map(item => ({
+        items: items.map((item: any) => ({
           unitPrice: Math.round((item.priceInCents || amount * 100) / (item.quantity || 1)),
           title: item.name,
           quantity: item.quantity || 1,
@@ -347,7 +347,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         paymentMethod: "CREDIT_CARD",
         amount: Math.round(amount * 100), // Converte para centavos
         traceable: true,
-        items: items.map(item => ({
+        items: items.map((item: any) => ({
           unitPrice: Math.round((item.priceInCents || amount * 100) / (item.quantity || 1)),
           title: item.name,
           quantity: item.quantity || 1,
