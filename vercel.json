@@ -1,19 +1,35 @@
 {
+  "version": 2,
   "buildCommand": "npm run build",
   "outputDirectory": "dist/public",
-  "functions": {
-    "api/*.js": { 
-      "maxDuration": 30 
-    }
-  },
-  "rewrites": [
+  "builds": [
     {
-      "source": "/((?!api|assets|.*\\.).*)$",
-      "destination": "/index.html"
+      "src": "dist/index.js",
+      "use": "@vercel/node"
     }
   ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/dist/index.js"
+    },
+    {
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
+      "dest": "/dist/public/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/dist/public/index.html"
+    }
+  ],
+  "functions": {
+    "dist/index.js": {
+      "maxDuration": 30
+    }
+  },
   "env": {
     "FOR4PAYMENTS_API_KEY": "@for4payments_api_key",
-    "UTMIFY_API_TOKEN": "@utmify_api_token"
+    "UTMIFY_API_TOKEN": "@utmify_api_token",
+    "OPENAI_API_KEY": "@openai_api_key"
   }
 }

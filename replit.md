@@ -77,10 +77,18 @@ Megaflix is a modern streaming platform application built with React and Express
 - **Environment**: Replit with Node.js 20, PostgreSQL 16 modules
 
 ### Production Build
-- **Frontend**: Vite build process generating optimized static assets
-- **Backend**: esbuild compilation to single JavaScript file
-- **Deployment**: Replit Autoscale deployment target
-- **Port Configuration**: Express server on port 5000, external port 80
+- **Frontend**: Vite build process generating optimized static assets (71KB CSS, 367KB JS)
+- **Backend**: esbuild compilation to single JavaScript file (34KB)
+- **Build Output**: `dist/public/` for frontend, `dist/index.js` for server
+- **Deployment**: Vercel serverless functions
+- **Configuration**: Optimized `vercel.json` for full-stack deployment
+
+### Vercel Deployment
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist/public`
+- **Server Function**: `dist/index.js` with 30s timeout
+- **Environment Variables**: FOR4PAYMENTS_API_KEY, UTMIFY_API_TOKEN, OPENAI_API_KEY
+- **Routing**: API routes to serverless function, static assets served directly
 
 ### Database Management
 - **Migrations**: Drizzle Kit for schema migrations
@@ -98,6 +106,9 @@ Changelog:
 - June 14, 2025. Added complete download page for app delivery after payment confirmation
 - June 14, 2025. Implemented 4-device download system (Mobile, Smart TV, Computer, TV Box)
 - June 14, 2025. Added Telegram support integration and installation instructions
+- June 15, 2025. Expanded FAQ system with 400+ questions covering all service aspects
+- June 15, 2025. Built production-ready Vercel deployment with optimized bundle sizes
+- June 15, 2025. Configured serverless functions and static asset routing for deployment
 
 ## User Preferences
 
