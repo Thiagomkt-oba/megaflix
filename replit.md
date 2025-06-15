@@ -112,6 +112,8 @@ Changelog:
 - June 15, 2025. Implemented order bump functionality in checkout system
 - June 15, 2025. Added upsell offers: monthly plan gets "+1 mês de uso por R$ 9,90", all plans get "atendimento exclusivo R$ 9,90"
 - June 15, 2025. Created interactive checkbox interface with dynamic pricing calculation and order summary updates
+- June 15, 2025. Replaced desktop redirect with comprehensive /noticia page featuring 25 best films of 2025
+- June 15, 2025. Enhanced news page with categorized content, top 5 rankings, and Megaflix promotion sections
 
 ## User Preferences
 
