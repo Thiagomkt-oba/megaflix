@@ -1,6 +1,5 @@
 import { Play } from "lucide-react";
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
-import { Button } from "@/components/ui/button";
 
 export default function Footer() {
   const scrollToSection = (sectionId: string) => {
@@ -11,29 +10,7 @@ export default function Footer() {
   };
 
   return (
-    <>
-      {/* Final CTA */}
-      <section className="py-16 bg-gradient-to-r from-netflix-red to-red-700">
-        <div className="container mx-auto px-4 text-center animate-fade-in">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Pronto para começar?
-          </h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Junte-se a milhares de usuários que já descobriram a liberdade de ter todos os conteúdos em um só lugar.
-          </p>
-          <Button 
-            onClick={() => scrollToSection('planos')}
-            className="bg-white text-netflix-red px-12 py-4 text-xl font-bold hover:bg-gray-100 transition-all transform hover:scale-105"
-            size="lg"
-          >
-            <Play className="mr-3 h-6 w-6" />
-            Começar Agora
-          </Button>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-dark-tertiary py-12">
+    <footer className="bg-dark-tertiary py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
@@ -123,6 +100,5 @@ export default function Footer() {
           </div>
         </div>
       </footer>
-    </>
   );
 }

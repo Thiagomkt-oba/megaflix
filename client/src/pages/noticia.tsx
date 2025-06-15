@@ -198,46 +198,9 @@ export default function Noticia() {
                   </div>
                 </div>
 
-                <div className="bg-netflix-red/20 border border-netflix-red/50 rounded-lg p-6 mt-8">
-                  <h3 className="text-2xl font-bold text-white mb-4 text-center">
-                    🎬 Todos os Filmes de 2025 no Megaflix
-                  </h3>
-                  <p className="text-gray-300 mb-6 text-center">
-                    Não perca nenhum dos 25 filmes imperdíveis de 2025! Com o Megaflix, você tem acesso completo ao melhor do cinema em uma única plataforma.
-                  </p>
-                  <div className="text-center">
-                    <a 
-                      href="/"
-                      className="inline-block bg-netflix-red text-white px-8 py-3 rounded-lg font-bold hover:bg-red-700 transition-colors mr-4"
-                    >
-                      Assinar Agora
-                    </a>
-                    <a 
-                      href="https://www.omelete.com.br/filmes/25-melhores-filmes-imperdiveis-para-ver-2025"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block bg-gray-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-500 transition-colors"
-                    >
-                      Ver Lista Completa
-                    </a>
-                  </div>
-                </div>
+                
 
-                <div className="bg-dark-primary rounded-lg p-6 mt-8">
-                  <h4 className="text-lg font-bold text-white mb-3">💫 Por que escolher o Megaflix?</h4>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <ul className="text-gray-300 space-y-2">
-                      <li>✅ Qualidade 4K Ultra HD</li>
-                      <li>✅ Sem anúncios ou interrupções</li>
-                      <li>✅ Download para assistir offline</li>
-                    </ul>
-                    <ul className="text-gray-300 space-y-2">
-                      <li>✅ Compatível com todos os dispositivos</li>
-                      <li>✅ Catálogo sempre atualizado</li>
-                      <li>✅ Suporte 24/7</li>
-                    </ul>
-                  </div>
-                </div>
+                
               </div>
             </CardContent>
           </Card>
