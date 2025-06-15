@@ -4,7 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { CreditCard, QrCode, Loader2, CheckCircle } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { CreditCard, QrCode, Loader2, CheckCircle, Plus, Star } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
 import PixPaymentModal from "@/components/pix-payment-modal";
@@ -44,6 +45,33 @@ export default function Checkout() {
   
   const selectedPlan = planPricing[planType as keyof typeof planPricing] || planPricing.mensal;
 
+  // Order bump configuration
+  const orderBumps = {
+    mensal: [
+      {
+        id: 'extra_usage',
+        name: 'Adicione mais 1 uso por apenas R$ 12,90',
+        description: 'Plano Anual com 60% de Desconto (no final vai ser 1 ano e 1 mês)',
+        price: 12.90,
+        priceInCents: 1290
+      }
+    ],
+    anual: [],
+    vitalicio: []
+  };
+
+  // Universal order bump for all plans
+  const universalOrderBump = {
+    id: 'exclusive_support',
+    name: 'Tenha um atendimento exclusivo e a possibilidade de solicitar filmes e séries',
+    description: 'Suporte premium com chat exclusivo e solicitações personalizadas',
+    price: 9.90,
+    priceInCents: 990
+  };
+
+  // Order bump state
+  const [selectedOrderBumps, setSelectedOrderBumps] = useState<string[]>([]);
+
   const [formData, setFormData] = useState<FormData>({
     nome: "",
     cpf: "",
@@ -61,6 +89,39 @@ export default function Checkout() {
   const [showPixModal, setShowPixModal] = useState(false);
   const { toast } = useToast();
   const [, setLocation] = useLocation();
+
+  // Order bump handlers
+  const handleOrderBumpToggle = (bumpId: string) => {
+    setSelectedOrderBumps(prev => 
+      prev.includes(bumpId) 
+        ? prev.filter(id => id !== bumpId)
+        : [...prev, bumpId]
+    );
+  };
+
+  // Calculate total price including order bumps
+  const calculateTotal = () => {
+    let total = selectedPlan.priceInCents;
+    
+    // Add plan-specific order bumps
+    const planBumps = orderBumps[planType as keyof typeof orderBumps] || [];
+    planBumps.forEach(bump => {
+      if (selectedOrderBumps.includes(bump.id)) {
+        total += bump.priceInCents;
+      }
+    });
+    
+    // Add universal order bump
+    if (selectedOrderBumps.includes(universalOrderBump.id)) {
+      total += universalOrderBump.priceInCents;
+    }
+    
+    return total;
+  };
+
+  const getTotalPrice = () => {
+    return calculateTotal() / 100; // Convert from cents to real
+  };
 
   const validateCPF = (cpf: string): boolean => {
     const cleanCPF = cpf.replace(/\D/g, '');
@@ -219,13 +280,31 @@ export default function Checkout() {
               holderName: formData.cardName
             }
           }),
-          items: [{
-            id: "megaflix-subscription",
-            name: selectedPlan.name,
-            quantity: 1,
-            priceInCents: selectedPlan.priceInCents
-          }],
-          amount: selectedPlan.price
+          items: [
+            {
+              id: "megaflix-subscription",
+              name: selectedPlan.name,
+              quantity: 1,
+              priceInCents: selectedPlan.priceInCents
+            },
+            // Add selected order bumps
+            ...(orderBumps[planType as keyof typeof orderBumps] || [])
+              .filter(bump => selectedOrderBumps.includes(bump.id))
+              .map(bump => ({
+                id: bump.id,
+                name: bump.name,
+                quantity: 1,
+                priceInCents: bump.priceInCents
+              })),
+            // Add universal order bump if selected
+            ...(selectedOrderBumps.includes(universalOrderBump.id) ? [{
+              id: universalOrderBump.id,
+              name: universalOrderBump.name,
+              quantity: 1,
+              priceInCents: universalOrderBump.priceInCents
+            }] : [])
+          ],
+          amount: getTotalPrice()
         }),
       });
 
@@ -444,13 +523,85 @@ export default function Checkout() {
                 </div>
               )}
 
+              {/* Order Bumps Section */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-white mb-3">🎯 Aproveite essas ofertas especiais!</h3>
+                
+                {/* Plan-specific order bumps */}
+                {(orderBumps[planType as keyof typeof orderBumps] || []).map((bump) => (
+                  <div key={bump.id} className="bg-gradient-to-r from-green-600/20 to-green-500/20 border border-green-500/50 rounded-lg p-4 hover:border-green-400 transition-colors">
+                    <div className="flex items-start space-x-3">
+                      <Checkbox
+                        id={bump.id}
+                        checked={selectedOrderBumps.includes(bump.id)}
+                        onCheckedChange={() => handleOrderBumpToggle(bump.id)}
+                        className="mt-1 border-green-400 data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
+                      />
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          <label
+                            htmlFor={bump.id}
+                            className="text-white font-medium cursor-pointer flex items-center"
+                          >
+                            <Plus className="h-4 w-4 text-green-400 mr-2" />
+                            {bump.name}
+                          </label>
+                          <span className="text-green-400 font-bold text-lg">
+                            R$ {bump.price.toFixed(2).replace('.', ',')}
+                          </span>
+                        </div>
+                        <p className="text-gray-300 text-sm mt-1">{bump.description}</p>
+                        <div className="flex items-center mt-2 text-xs text-green-400">
+                          <Star className="h-3 w-3 mr-1" />
+                          <span>Oferta por tempo limitado!</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                {/* Universal order bump */}
+                <div className="bg-gradient-to-r from-purple-600/20 to-purple-500/20 border border-purple-500/50 rounded-lg p-4 hover:border-purple-400 transition-colors">
+                  <div className="flex items-start space-x-3">
+                    <Checkbox
+                      id={universalOrderBump.id}
+                      checked={selectedOrderBumps.includes(universalOrderBump.id)}
+                      onCheckedChange={() => handleOrderBumpToggle(universalOrderBump.id)}
+                      className="mt-1 border-purple-400 data-[state=checked]:bg-purple-600 data-[state=checked]:border-purple-600"
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <label
+                          htmlFor={universalOrderBump.id}
+                          className="text-white font-medium cursor-pointer flex items-center"
+                        >
+                          <Star className="h-4 w-4 text-purple-400 mr-2" />
+                          {universalOrderBump.name}
+                        </label>
+                        <span className="text-purple-400 font-bold text-lg">
+                          R$ {universalOrderBump.price.toFixed(2).replace('.', ',')}
+                        </span>
+                      </div>
+                      <p className="text-gray-300 text-sm mt-1">{universalOrderBump.description}</p>
+                      <div className="flex items-center mt-2 text-xs text-purple-400">
+                        <Star className="h-3 w-3 mr-1" />
+                        <span>Upgrade seu plano agora!</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {/* Resumo do Pedido */}
               <div className="bg-gray-700 p-4 rounded-lg">
                 <h3 className="text-lg font-semibold text-white mb-3">Resumo do Pedido</h3>
+                
+                {/* Base plan */}
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-gray-300">{selectedPlan.name}</span>
                   <span className="text-white">R$ {selectedPlan.price.toFixed(2).replace('.', ',')}</span>
                 </div>
+                
                 {planType === 'anual' && (
                   <div className="text-xs text-green-400 mb-2">
                     Economia de 60% - Equivale a R$ 8,08/mês
@@ -461,11 +612,36 @@ export default function Checkout() {
                     Pagamento único - Acesso para sempre!
                   </div>
                 )}
+
+                {/* Selected order bumps */}
+                {(orderBumps[planType as keyof typeof orderBumps] || [])
+                  .filter(bump => selectedOrderBumps.includes(bump.id))
+                  .map((bump) => (
+                    <div key={bump.id} className="flex justify-between items-center mb-2 text-sm">
+                      <span className="text-green-300">+ {bump.name}</span>
+                      <span className="text-green-300">R$ {bump.price.toFixed(2).replace('.', ',')}</span>
+                    </div>
+                  ))
+                }
+
+                {/* Universal order bump if selected */}
+                {selectedOrderBumps.includes(universalOrderBump.id) && (
+                  <div className="flex justify-between items-center mb-2 text-sm">
+                    <span className="text-purple-300">+ {universalOrderBump.name}</span>
+                    <span className="text-purple-300">R$ {universalOrderBump.price.toFixed(2).replace('.', ',')}</span>
+                  </div>
+                )}
+
                 <div className="border-t border-gray-600 pt-2 mt-2">
                   <div className="flex justify-between items-center font-bold">
                     <span className="text-white">Total</span>
-                    <span className="text-netflix-red text-xl">R$ {selectedPlan.price.toFixed(2).replace('.', ',')}</span>
+                    <span className="text-netflix-red text-xl">R$ {getTotalPrice().toFixed(2).replace('.', ',')}</span>
                   </div>
+                  {selectedOrderBumps.length > 0 && (
+                    <div className="text-xs text-green-400 mt-1">
+                      Você economizou com essas ofertas especiais!
+                    </div>
+                  )}
                 </div>
               </div>
 
