@@ -51,7 +51,7 @@ export default function Checkout() {
       {
         id: 'extra_usage',
         name: 'Adicione mais 1 mês de uso por apenas 9,90!',
-        description: 'Plano Anual com 60% de Desconto (no final vai ser 1 ano e 1 mês)',
+        description: 'Leve mais 1 mês por apenas 9,90!',
         price: 9.90,
         priceInCents: 990
       }
@@ -550,7 +550,7 @@ export default function Checkout() {
                             R$ {bump.price.toFixed(2).replace('.', ',')}
                           </span>
                         </div>
-                        <p className="text-gray-300 text-sm mt-1">{bump.description}</p>
+                        <p className="text-gray-300 text-base mt-1 font-medium">{bump.description}</p>
                         <div className="flex items-center mt-2 text-xs text-green-400">
                           <Star className="h-3 w-3 mr-1" />
                           <span>Oferta por tempo limitado!</span>
