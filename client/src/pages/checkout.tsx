@@ -50,10 +50,10 @@ export default function Checkout() {
     mensal: [
       {
         id: 'extra_usage',
-        name: 'Adicione mais 1 uso por apenas R$ 12,90',
+        name: 'Adicione mais 1 mês de uso por apenas 9,90!',
         description: 'Plano Anual com 60% de Desconto (no final vai ser 1 ano e 1 mês)',
-        price: 12.90,
-        priceInCents: 1290
+        price: 9.90,
+        priceInCents: 990
       }
     ],
     anual: [],

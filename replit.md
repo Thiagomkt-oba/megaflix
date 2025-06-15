@@ -109,6 +109,9 @@ Changelog:
 - June 15, 2025. Expanded FAQ system with 400+ questions covering all service aspects
 - June 15, 2025. Built production-ready Vercel deployment with optimized bundle sizes
 - June 15, 2025. Configured serverless functions and static asset routing for deployment
+- June 15, 2025. Implemented order bump functionality in checkout system
+- June 15, 2025. Added upsell offers: monthly plan gets "+1 mês de uso por R$ 9,90", all plans get "atendimento exclusivo R$ 9,90"
+- June 15, 2025. Created interactive checkbox interface with dynamic pricing calculation and order summary updates
 
 ## User Preferences
 
