@@ -7,6 +7,7 @@ import Home from "@/pages/home";
 import Checkout from "@/pages/checkout";
 import PaymentSuccess from "@/pages/payment-success";
 import DownloadPage from "@/pages/download";
+import Noticia from "@/pages/noticia";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -16,6 +17,7 @@ function Router() {
       <Route path="/checkout" component={Checkout} />
       <Route path="/payment-success" component={PaymentSuccess} />
       <Route path="/download" component={DownloadPage} />
+      <Route path="/noticia" component={Noticia} />
       <Route component={NotFound} />
     </Switch>
   );
