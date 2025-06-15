@@ -198,26 +198,79 @@ export default function Noticia() {
                   </div>
                 </div>
 
-                <div className="bg-netflix-red/20 border border-netflix-red/30 rounded-lg p-6 mt-8">
-                  <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                    🎬 Assine o Megaflix e tenha acesso a todos esses filmes!
-                  </h3>
-                  <p className="text-gray-300 mb-4">
-                    Com o Megaflix, você tem acesso completo aos maiores lançamentos de 2025, séries exclusivas, animes e muito mais - tudo em uma única plataforma.
-                  </p>
-                  <div className="flex flex-wrap gap-3">
-                    <a 
-                      href="/checkout" 
-                      className="bg-netflix-red hover:bg-red-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors"
-                    >
-                      Assinar Agora
-                    </a>
-                    <a 
-                      href="/" 
-                      className="border border-gray-600 hover:border-gray-500 text-white px-6 py-2 rounded-lg font-semibold transition-colors"
-                    >
-                      Ver Catálogo
-                    </a>
+                <h2 className="text-2xl font-bold text-white mt-8 mb-6">
+                  🎭 Outros Destaques de 2025
+                </h2>
+
+                <div className="grid md:grid-cols-2 gap-6 mb-8">
+                  <div className="bg-gray-800/30 rounded-lg p-6 border-l-4 border-cyan-500">
+                    <h3 className="text-lg font-bold text-white mb-2">Avatar 3</h3>
+                    <p className="text-gray-300 mb-2">James Cameron retorna com mais uma aventura épica em Pandora.</p>
+                    <span className="text-sm text-blue-400">📅 19 de dezembro nos cinemas</span>
+                  </div>
+
+                  <div className="bg-gray-800/30 rounded-lg p-6 border-l-4 border-indigo-500">
+                    <h3 className="text-lg font-bold text-white mb-2">Quarteto Fantástico</h3>
+                    <p className="text-gray-300 mb-2">A Marvel reinventa seus primeiros heróis com nova abordagem.</p>
+                    <span className="text-sm text-blue-400">📅 25 de julho nos cinemas</span>
+                  </div>
+
+                  <div className="bg-gray-800/30 rounded-lg p-6 border-l-4 border-pink-500">
+                    <h3 className="text-lg font-bold text-white mb-2">Wicked: Parte 2</h3>
+                    <p className="text-gray-300 mb-2">A conclusão do musical que conquistou o mundo.</p>
+                    <span className="text-sm text-blue-400">📅 21 de novembro nos cinemas</span>
+                  </div>
+
+                  <div className="bg-gray-800/30 rounded-lg p-6 border-l-4 border-teal-500">
+                    <h3 className="text-lg font-bold text-white mb-2">Thunderbolts</h3>
+                    <p className="text-gray-300 mb-2">Anti-heróis da Marvel se unem em aventura explosiva.</p>
+                    <span className="text-sm text-blue-400">📅 2 de maio nos cinemas</span>
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-r from-netflix-red/20 to-red-800/20 border border-netflix-red/30 rounded-lg p-8 mt-8">
+                  <div className="text-center mb-6">
+                    <h3 className="text-2xl font-bold text-white mb-4">
+                      🎬 Todos esses filmes estarão no Megaflix!
+                    </h3>
+                    <p className="text-xl text-gray-300 mb-6">
+                      Não perca nenhum lançamento de 2025. Com o Megaflix, você tem acesso completo aos maiores sucessos do cinema, séries exclusivas, animes e muito mais - tudo em uma única plataforma.
+                    </p>
+                  </div>
+                  
+                  <div className="grid md:grid-cols-3 gap-6 mb-6">
+                    <div className="text-center">
+                      <div className="text-3xl font-bold text-netflix-red mb-2">14.000+</div>
+                      <div className="text-gray-300">Filmes</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-3xl font-bold text-netflix-red mb-2">12.000+</div>
+                      <div className="text-gray-300">Séries</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-3xl font-bold text-netflix-red mb-2">500+</div>
+                      <div className="text-gray-300">Canais</div>
+                    </div>
+                  </div>
+                  
+                  <div className="text-center">
+                    <p className="text-lg text-yellow-300 mb-4">
+                      💰 Economize mais de R$ 2.500 por ano vs outras plataformas!
+                    </p>
+                    <div className="flex flex-wrap justify-center gap-4">
+                      <a 
+                        href="/checkout" 
+                        className="bg-netflix-red hover:bg-red-700 text-white px-8 py-3 rounded-lg font-bold text-lg transition-colors transform hover:scale-105"
+                      >
+                        Assinar Agora
+                      </a>
+                      <a 
+                        href="/" 
+                        className="border-2 border-gray-600 hover:border-gray-400 text-white px-8 py-3 rounded-lg font-bold text-lg transition-colors"
+                      >
+                        Ver Catálogo
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>

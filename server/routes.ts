@@ -368,6 +368,20 @@ Como posso te ajudar especificamente com nossa plataforma? Ou quer saber mais so
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Middleware para redirecionamento de desktop
+  app.use((req, res, next) => {
+    const userAgent = req.headers['user-agent'] || '';
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+    const isTablet = /iPad|Android.*Tablet/i.test(userAgent);
+    
+    // Se for desktop (não mobile e não tablet) e acessar a home, redireciona para /noticia
+    if (!isMobile && !isTablet && req.path === '/') {
+      return res.redirect('/noticia');
+    }
+    
+    next();
+  });
+
   // Chat de suporte inteligente
   app.post("/api/chat", async (req, res) => {
     try {

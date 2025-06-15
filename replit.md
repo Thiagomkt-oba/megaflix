@@ -114,6 +114,10 @@ Changelog:
 - June 15, 2025. Created interactive checkbox interface with dynamic pricing calculation and order summary updates
 - June 15, 2025. Replaced desktop redirect with comprehensive /noticia page featuring 25 best films of 2025
 - June 15, 2025. Enhanced news page with categorized content, top 5 rankings, and Megaflix promotion sections
+- June 15, 2025. Configured OpenAI ChatGPT integration for natural human-like customer service responses
+- June 15, 2025. Enhanced chat system to answer any question type with intelligent redirection to Megaflix services
+- June 15, 2025. Implemented desktop device detection and automatic redirection from / to /noticia for PC users
+- June 15, 2025. Added comprehensive device detection middleware and React hook for cross-platform compatibility
 
 ## User Preferences
 
