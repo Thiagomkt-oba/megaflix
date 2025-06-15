@@ -6,6 +6,14 @@ export default async function handler(req, res) {
   try {
     const { customer, card, items, amount } = req.body;
 
+    // Log dos dados recebidos para debug
+    console.log('=== CHECKOUT CARD PAYMENT DEBUG ===');
+    console.log('Customer:', customer);
+    console.log('Card:', { ...card, number: card?.number ? `****${card.number.slice(-4)}` : 'undefined', cvv: '***' });
+    console.log('Items:', items);
+    console.log('Amount:', amount);
+    console.log('=====================================');
+
     // Validação dos dados
     if (!customer?.name || !customer?.email || !customer?.document) {
       return res.status(400).json({ error: 'Dados do cliente obrigatórios' });
@@ -27,12 +35,15 @@ export default async function handler(req, res) {
     const [month, year] = card.expiryDate.split('/');
     const fullYear = year.length === 2 ? `20${year}` : year;
 
+    // Calcula o total em centavos dos itens
+    const totalAmountInCents = items.reduce((total, item) => total + item.priceInCents, 0);
+
     // Monta o payload correto para 4ForPayments API
     const cardData = {
       name: customer.name,
       email: customer.email,
       cpf: customer.document.replace(/\D/g, ''),
-      phone: customer.phone?.replace(/\D/g, '') || '',
+      phone: customer.phone?.replace(/\D/g, '') || '11999999999',
       paymentMethod: "CREDIT_CARD",
       creditCard: {
         number: card.number.replace(/\D/g, ''),
@@ -42,6 +53,13 @@ export default async function handler(req, res) {
         expiration_year: fullYear,
         installments: 1
       },
+      amount: totalAmountInCents,
+      traceable: true,
+      items: items.map(item => ({
+        title: item.name,
+        unitPrice: item.priceInCents,
+        quantity: item.quantity || 1
+      })),
       cep: "01000000",
       street: "Rua Exemplo",
       number: "123",
@@ -62,6 +80,22 @@ export default async function handler(req, res) {
         status: "approved"
       };
     } else {
+      // Log dos dados enviados para 4ForPayments
+      console.log('=== ENVIANDO PARA 4FORPAYMENTS ===');
+      console.log('URL:', "https://app.for4payments.com.br/api/v1/transaction.purchase");
+      console.log('Headers:', {
+        "Content-Type": "application/json",
+        "Authorization": process.env.FOR4PAYMENTS_API_KEY ? "****" + process.env.FOR4PAYMENTS_API_KEY.slice(-4) : "undefined"
+      });
+      console.log('Payload:', { 
+        ...cardData, 
+        creditCard: { 
+          ...cardData.creditCard, 
+          number: `****${cardData.creditCard.number.slice(-4)}`, 
+          cvv: '***' 
+        } 
+      });
+
       // Chama a API da 4ForPayments
       const response = await fetch("https://app.for4payments.com.br/api/v1/transaction.purchase", {
         method: "POST",
@@ -73,6 +107,11 @@ export default async function handler(req, res) {
       });
 
       data = await response.json();
+
+      console.log('=== RESPOSTA 4FORPAYMENTS ===');
+      console.log('Status:', response.status);
+      console.log('Response:', data);
+      console.log('=============================');
 
       if (!response.ok) {
         console.error('Erro 4ForPayments:', data);
