@@ -95,6 +95,9 @@ Changelog:
 - June 14, 2025. Added interactive action buttons in chat (Assinar Agora, Ver Catálogo)
 - June 14, 2025. Fixed testimonials avatars with custom colored initial badges
 - June 14, 2025. Created intelligent fallback system for chat responses
+- June 14, 2025. Added complete download page for app delivery after payment confirmation
+- June 14, 2025. Implemented 4-device download system (Mobile, Smart TV, Computer, TV Box)
+- June 14, 2025. Added Telegram support integration and installation instructions
 
 ## User Preferences
 

@@ -211,9 +211,12 @@ export default function PaymentSuccess() {
             </Link>
             
             {paymentData.status === 'approved' && (
-              <Button className="w-full sm:w-auto bg-netflix-red hover:bg-red-700">
-                Começar a Assistir
-              </Button>
+              <Link href="/download">
+                <Button className="w-full sm:w-auto bg-netflix-red hover:bg-red-700">
+                  <Download className="h-4 w-4 mr-2" />
+                  Baixar Aplicativo
+                </Button>
+              </Link>
             )}
           </div>
 
