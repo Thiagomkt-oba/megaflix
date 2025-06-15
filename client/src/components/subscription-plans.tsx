@@ -47,7 +47,7 @@ export default function SubscriptionPlans() {
                   Todos os dispositivos
                 </li>
               </ul>
-              <Link href="/checkout">
+              <Link href="/checkout?plan=mensal">
                 <Button className="w-full bg-gray-600 text-white hover:bg-gray-500">
                   Escolher Plano
                 </Button>
@@ -89,7 +89,7 @@ export default function SubscriptionPlans() {
                   Suporte prioritário
                 </li>
               </ul>
-              <Link href="/checkout">
+              <Link href="/checkout?plan=anual">
                 <Button className="w-full bg-gradient-to-r from-yellow-400 to-yellow-300 text-black hover:from-yellow-300 hover:to-yellow-200 font-extrabold text-lg py-4 shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-yellow-500">
                   ⚡ ESCOLHER PLANO ⚡
                 </Button>
@@ -132,7 +132,7 @@ export default function SubscriptionPlans() {
                   Acesso vitalício
                 </li>
               </ul>
-              <Link href="/checkout">
+              <Link href="/checkout?plan=vitalicio">
                 <Button className="w-full bg-white text-green-700 hover:bg-gray-100 font-bold">
                   Escolher Plano
                 </Button>

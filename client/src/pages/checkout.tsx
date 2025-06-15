@@ -31,6 +31,19 @@ interface PaymentResponse {
 }
 
 export default function Checkout() {
+  // Get plan information from URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const planType = urlParams.get('plan') || 'mensal';
+  
+  // Plan pricing configuration
+  const planPricing = {
+    mensal: { price: 37.90, priceInCents: 3790, name: 'Plano Mensal' },
+    anual: { price: 97.00, priceInCents: 9700, name: 'Plano Anual' },
+    vitalicio: { price: 197.00, priceInCents: 19700, name: 'Plano Vitalício' }
+  };
+  
+  const selectedPlan = planPricing[planType as keyof typeof planPricing] || planPricing.mensal;
+
   const [formData, setFormData] = useState<FormData>({
     nome: "",
     cpf: "",
@@ -208,11 +221,11 @@ export default function Checkout() {
           }),
           items: [{
             id: "megaflix-subscription",
-            name: "Assinatura Megaflix",
+            name: selectedPlan.name,
             quantity: 1,
-            priceInCents: 3790 // R$ 37,90
+            priceInCents: selectedPlan.priceInCents
           }],
-          amount: 37.90
+          amount: selectedPlan.price
         }),
       });
 
@@ -435,13 +448,23 @@ export default function Checkout() {
               <div className="bg-gray-700 p-4 rounded-lg">
                 <h3 className="text-lg font-semibold text-white mb-3">Resumo do Pedido</h3>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-gray-300">Assinatura Megaflix (Mensal)</span>
-                  <span className="text-white">R$ 37,90</span>
+                  <span className="text-gray-300">{selectedPlan.name}</span>
+                  <span className="text-white">R$ {selectedPlan.price.toFixed(2).replace('.', ',')}</span>
                 </div>
+                {planType === 'anual' && (
+                  <div className="text-xs text-green-400 mb-2">
+                    Economia de 60% - Equivale a R$ 8,08/mês
+                  </div>
+                )}
+                {planType === 'vitalicio' && (
+                  <div className="text-xs text-green-400 mb-2">
+                    Pagamento único - Acesso para sempre!
+                  </div>
+                )}
                 <div className="border-t border-gray-600 pt-2 mt-2">
                   <div className="flex justify-between items-center font-bold">
                     <span className="text-white">Total</span>
-                    <span className="text-netflix-red text-xl">R$ 37,90</span>
+                    <span className="text-netflix-red text-xl">R$ {selectedPlan.price.toFixed(2).replace('.', ',')}</span>
                   </div>
                 </div>
               </div>
