@@ -28,7 +28,7 @@ export default function TrendingSection() {
 
           {/* Espaço para vídeo do YouTube */}
           <div className="mb-12 text-center">
-            <div className="bg-dark-primary rounded-xl p-8 max-w-6xl mx-auto">
+            <div className="rounded-xl p-8 max-w-6xl mx-auto bg-[#1f1c30]">
               <h3 className="font-bold mb-4 text-white text-[16px]">
                 Veja como funciona o Megaflix
               </h3>
