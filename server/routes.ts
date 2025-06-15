@@ -58,49 +58,46 @@ async function getResponseForMessage(message: string): Promise<string> {
       messages: [
         {
           role: "system",
-          content: `Você é um assistente virtual especializado no Megaflix, um serviço de streaming de filmes, séries, doramas, animes, desenhos e novelas. Seu trabalho é fornecer respostas claras e úteis sobre todos os aspectos do serviço.
+          content: `Você é um atendente virtual humano do Megaflix, uma plataforma de streaming premium. Responda como se fosse um atendente real de uma empresa de streaming, sendo prestativo, amigável e conversacional.
 
-INFORMAÇÕES DO SERVIÇO:
-- Mais de 14.000 filmes (lançamentos, clássicos, ação, drama, comédia, terror)
-- Mais de 12.000 séries (Netflix originals, séries coreanas, americanas, brasileiras, animes)
-- Mais de 500 canais de TV ao vivo (esportes, notícias, entretenimento, infantil)
-- Todo o catálogo Netflix, Prime Video, Disney+, HBO Max, Apple TV+, Paramount+, Crunchyroll, Globoplay e YouTube Premium em um só lugar
+SOBRE O MEGAFLIX:
+- Plataforma de streaming com +14.000 filmes, +12.000 séries, +500 canais de TV ao vivo
+- Inclui conteúdo de Netflix, Prime Video, Disney+, HBO Max, Apple TV+, Paramount+, Crunchyroll, Globoplay e YouTube Premium
+- Funciona em todos os dispositivos: celular, Smart TV, computador, TV Box, até 5 dispositivos simultâneos
+- Download offline disponível no app móvel
 
-PLANOS DE ASSINATURA:
-- Plano Mensal: R$ 37,90/mês
-- Plano Anual: R$ 97/ano (economia de mais de 60%)
-- Plano Vitalício: R$ 197 (pagamento único, acesso para sempre)
+PLANOS E PREÇOS:
+- Mensal: R$ 37,90/mês
+- Anual: R$ 97/ano (economia de 60% - apenas R$ 8,08/mês)
+- Vitalício: R$ 197 (pagamento único, acesso para sempre)
+- Formas de pagamento: cartão, PIX, PayPal
 
-COMPATIBILIDADE:
-- Celulares (Android/iOS) com app para download
-- Smart TVs (Samsung, LG, Sony e outras)
-- Computadores (via navegador)
-- TV Box, Chromecast, Apple TV
-- Até 5 dispositivos simultâneos
-- Download para assistir offline no celular
+ECONOMIA REAL:
+- Outras plataformas separadas custam R$ 267/mês
+- Megaflix custa apenas R$ 37,90/mês
+- Economia anual de mais de R$ 2.500
 
-ECONOMIA:
-- Assinando todos os serviços separadamente custaria R$ 267/mês
-- Com Megaflix você economiza R$ 229,10 por mês
-- No plano anual: economia de mais de R$ 2.500 por ano
-- No plano vitalício: economia de mais de R$ 30.000 ao longo de 10 anos
+INSTRUÇÕES DE ATENDIMENTO:
+1. Responda a QUALQUER pergunta como um atendente humano faria
+2. Para perguntas sobre o Megaflix, seja detalhado e prestativo
+3. Para perguntas gerais (clima, notícias, dicas, etc.), responda naturalmente como um atendente amigável
+4. Use linguagem coloquial brasileira, seja caloroso e acolhedor
+5. Sempre tente conectar a conversa de volta ao Megaflix quando apropriado
+6. Para assinar: "Clique em 'Assinar Agora' na página"
+7. Para cancelar: "Acesse 'Minha Conta' > 'Configurações' > 'Cancelar'"
+8. Seja empático, paciente e sempre disposto a ajudar
 
-FORMAS DE PAGAMENTO: Cartão de crédito, débito, PIX e PayPal
+Exemplo de tom: "Oi! Que legal sua pergunta! Deixa eu te ajudar com isso..." / "Nossa, que situação! Vou te explicar certinho..." / "Perfeito! Fico feliz em esclarecer isso para você..."
 
-INSTRUÇÕES IMPORTANTES:
-- Sempre que perguntarem "como assinar", responda: "Para assinar o serviço, basta clicar no botão 'Assinar Agora' que está destacado na página."
-- Para cancelamento: "Acesse 'Minha Conta' > 'Configurações' > 'Cancelar Assinatura'"
-- Seja sempre educado, claro e informativo
-- Se a pergunta não for sobre o serviço, responda educadamente que só pode fornecer informações sobre o Megaflix
-- Destaque sempre as vantagens e economia do serviço`
+Responda como se você fosse uma pessoa real trabalhando no atendimento ao cliente, não como um robô.`
         },
         {
           role: "user",
           content: message
         }
       ],
-      max_tokens: 300,
-      temperature: 0.7,
+      max_tokens: 400,
+      temperature: 0.8,
     });
 
     return completion.choices[0].message.content || megaflixFAQ.default;
@@ -269,6 +266,39 @@ const expandedQuestions = {
 function getFallbackResponse(message: string): string {
   const msg = message.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   
+  // Respostas humanizadas para qualquer assunto
+  const humanizedResponses = {
+    // Saudações
+    "oi": "Oi! Tudo bem? Sou do atendimento Megaflix! Como posso te ajudar hoje?",
+    "ola": "Olá! Que bom falar com você! O que você gostaria de saber?", 
+    "bom dia": "Bom dia! Espero que esteja tendo um ótimo dia! Em que posso ajudar?",
+    "boa tarde": "Boa tarde! Como você está? Como posso te auxiliar?",
+    "boa noite": "Boa noite! Ainda estou aqui para te atender! O que precisa saber?",
+    
+    // Assuntos gerais com redirecionamento natural
+    "clima": "Sobre o clima não sei te dizer, mas sei que qualquer tempo é perfeito para maratonar! Já conhece o Megaflix?",
+    "tempo": "Tempo não é minha especialidade, mas entretenimento é! Que tal conhecer nossos +14.000 filmes?",
+    "receita": "Que legal que gosta de cozinhar! Temos programas de culinária incríveis também. Quer ver nossos planos?",
+    "dica": "Adoro dar dicas! Aqui vai uma: economize R$ 2.500+ por ano escolhendo Megaflix! Quer saber como?",
+    "amor": "Que fofo! Sabe o que combina com amor? Maratonar séries românticas juntos! Temos milhares delas!",
+    "trabalho": "Entendo sobre trabalho! Depois de um dia puxado, relaxar com um filme é tudo, né?",
+    "estudo": "Estudar é importante! E relaxar também! Que tal uma pausa com nossos conteúdos?",
+    "esporte": "Amo esportes! Temos ESPN, SporTV, Fox Sports ao vivo! Quer conhecer nossos canais?",
+    "noticia": "Notícias não posso dar, mas temos canais 24h como Globo News! Quer ver nossos +500 canais?",
+    
+    // Outros assuntos
+    "ajuda": "Claro que vou te ajudar! É sobre o Megaflix ou posso te dar uma dica de entretenimento?",
+    "obrigado": "Imagina! Fico feliz em ajudar! Tem mais alguma dúvida sobre nossa plataforma?",
+    "valeu": "De nada! Estou sempre aqui! Quer saber mais alguma coisa sobre o Megaflix?"
+  };
+
+  // Verifica respostas humanizadas primeiro
+  for (const [keyword, response] of Object.entries(humanizedResponses)) {
+    if (msg.includes(keyword)) {
+      return response;
+    }
+  }
+
   // Busca por correspondências no FAQ expandido
   for (const [keywords, response] of Object.entries(expandedQuestions)) {
     const keywordList = keywords.split(' ');
@@ -277,53 +307,64 @@ function getFallbackResponse(message: string): string {
     }
   }
   
-  // Sistema de fallback original expandido
+  // Sistema de fallback melhorado
   if (msg.includes("como assinar") || msg.includes("como faço para assinar")) {
-    return "Para assinar: clique em 'Assinar Agora', escolha seu plano, faça pagamento e pronto! Acesso liberado na hora. Aceitamos cartão, PIX e PayPal.";
+    return "Para assinar é super fácil: clique em 'Assinar Agora' na página, escolha seu plano favorito, faça o pagamento e pronto! Acesso liberado na hora. Aceitamos cartão, PIX e PayPal.";
   }
   
   if (msg.includes("plano mensal") || msg.includes("o que inclui mensal")) {
-    return "Plano mensal R$ 37,90: 14.000+ filmes, 12.000+ séries, 500+ canais, animes, novelas. Sem anúncios, qualidade HD/4K!";
+    return "O plano mensal por R$ 37,90 é perfeito! Inclui: 14.000+ filmes, 12.000+ séries, 500+ canais, animes, novelas. Sem anúncios, qualidade HD/4K!";
   }
   if (msg.includes("plano anual") || msg.includes("o que inclui anual")) {
-    return "Plano anual R$ 97: mesmo conteúdo total, economia 60%! Apenas R$ 8,08/mês. Economia de R$ 2.500+ vs outras plataformas.";
+    return "O plano anual por R$ 97 é nosso campeão de economia! Mesmo conteúdo total, mas você paga apenas R$ 8,08/mês. Economia de mais de R$ 2.500!";
   }
   if (msg.includes("plano vitalicio") || msg.includes("o que inclui vitalicio")) {
-    return "Plano vitalício R$ 197: pagamento único, acesso eterno! Melhor negócio, se paga em 5 meses vs mensal.";
+    return "O plano vitalício por R$ 197 é o melhor negócio! Pagamento único, acesso eterno. Se paga sozinho em 5 meses!";
   }
   
   if (msg.includes("dispositivos") || msg.includes("onde assistir") || msg.includes("compativel")) {
-    return "Funciona ВЕЗДЕ: Android, iOS, Smart TVs, computadores, TV Box, Chromecast. Até 5 dispositivos simultâneos!";
+    return "Funciona em TODOS os dispositivos: Android, iOS, Smart TVs, computadores, TV Box, Chromecast. Até 5 dispositivos simultâneos!";
   }
   
   if (msg.includes("offline") || msg.includes("download") || msg.includes("sem internet")) {
-    return "Download disponível! Baixe filmes/séries no celular para assistir offline. Perfeito para viagens!";
+    return "Claro que tem download! Baixe filmes e séries no celular para assistir offline. Perfeito para qualquer lugar!";
   }
   
   if (msg.includes("cancelar") || msg.includes("cancelamento")) {
-    return "Cancelamento fácil: 'Minha Conta' > 'Configurações' > 'Cancelar'. Sem multas, acesso até fim do período pago.";
+    return "Cancelar é super tranquilo: vá em 'Minha Conta' > 'Configurações' > 'Cancelar'. Sem multas, sem burocracia!";
   }
   
   if (msg.includes("teste gratuito") || msg.includes("gratis")) {
-    return "Sem teste grátis, mas preços baixíssimos! Plano mensal R$ 37,90 para experimentar. Vale muito a pena!";
+    return "Não temos teste grátis, mas com preços tão baixos não precisa! O mensal custa apenas R$ 37,90 para experimentar tudo!";
   }
   
   if (msg.includes("quantos filme") || msg.includes("filme tem")) {
-    return "14.000+ filmes: lançamentos 2024, clássicos, nacionais, internacionais. Todo catálogo Netflix/Prime/Disney+ incluído!";
+    return "Temos mais de 14.000 filmes incríveis: lançamentos 2024, clássicos, nacionais, internacionais. Todo o catálogo Netflix/Prime/Disney+ incluído!";
   }
   if (msg.includes("quantas serie") || msg.includes("serie tem")) {
-    return "12.000+ séries: originais Netflix, coreanas, americanas, brasileiras, animes. Sem anúncios, HD/4K!";
+    return "Mais de 12.000 séries esperando por você: originais Netflix, coreanas, americanas, brasileiras, animes. Tudo sem anúncios!";
   }
   if (msg.includes("quantos canal") || msg.includes("tv ao vivo")) {
-    return "500+ canais ao vivo: esporte (ESPN), notícias (Globo News), entretenimento, infantil. TV tradicional quando quiser!";
+    return "Mais de 500 canais ao vivo: esportes (ESPN), notícias (Globo News), entretenimento, infantil. TV tradicional quando quiser!";
   }
   
-  if (msg.includes("filme")) return megaflixFAQ.filmes;
-  if (msg.includes("serie") || msg.includes("novela")) return megaflixFAQ.series;
-  if (msg.includes("anime")) return megaflixFAQ.anime;
-  if (msg.includes("canal") || msg.includes("tv")) return megaflixFAQ.canais;
+  if (msg.includes("filme")) return "Que bom que gosta de filmes! " + megaflixFAQ.filmes;
+  if (msg.includes("serie") || msg.includes("novela")) return "Séries são vida! " + megaflixFAQ.series;
+  if (msg.includes("anime")) return "Otaku detected! " + megaflixFAQ.anime;
+  if (msg.includes("canal") || msg.includes("tv")) return "TV ao vivo é demais! " + megaflixFAQ.canais;
   
-  return megaflixFAQ.default;
+  // Resposta padrão mais humanizada para qualquer pergunta
+  return `Oi! Obrigado por entrar em contato!
+
+Sua pergunta é interessante! Embora eu seja especialista em entretenimento, posso não ter todas as respostas do mundo, mas tenho TODAS as respostas sobre diversão!
+
+No Megaflix você encontra:
+• +14.000 filmes (de lançamentos a clássicos)
+• +12.000 séries (incluindo Netflix, Prime, Disney+)  
+• +500 canais de TV ao vivo
+• Planos a partir de R$ 37,90/mês
+
+Como posso te ajudar especificamente com nossa plataforma? Ou quer saber mais sobre nossos planos incríveis?`;
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
