@@ -1,0 +1,65 @@
+const perguntasRespostas = [
+  { pergunta: 'Aceita cartão?', resposta: 'Sim, aceitamos pagamentos via cartão de crédito e débito.' },
+  { pergunta: 'É golpe?', resposta: 'Não, nosso serviço é legítimo e seguro. Temos muitas avaliações positivas de nossos usuários.' },
+  { pergunta: 'Tem filme "Nome do Filme"?', resposta: 'Para verificar se o filme "Nome do Filme" está disponível, por favor, acesse nosso catálogo ou pesquise no nosso aplicativo.' },
+  { pergunta: 'Tem a série "Nome da Série"?', resposta: 'Sim, a série "Nome da Série" está disponível em nosso catálogo. Você pode assisti-la imediatamente após assinar.' },
+  { pergunta: 'Tem como pagar no Pix?', resposta: 'Sim, aceitamos pagamentos via Pix. Ao selecionar a forma de pagamento, escolha Pix para pagar diretamente.' },
+  { pergunta: 'Eu quero, como pagar?', resposta: 'Você pode pagar utilizando cartão de crédito, Pix ou boleto bancário. Escolha o método de pagamento que melhor lhe convier.' },
+  { pergunta: 'O que está incluso no plano?', resposta: 'O plano inclui acesso ilimitado a filmes, séries, doramas, animes, e desenhos em todos os dispositivos compatíveis.' },
+  { pergunta: 'Qual é a diferença entre os planos?', resposta: 'O plano mensal custa R$37,90, o plano anual oferece 12 meses por R$97 e o plano vitalício oferece acesso por um único pagamento de R$197.' },
+  { pergunta: 'Como faço para cancelar minha assinatura?', resposta: 'Você pode cancelar sua assinatura diretamente no aplicativo ou através do nosso site na seção "Minha Conta".' },
+  { pergunta: 'O que significa plano vitalício?', resposta: 'O plano vitalício é um pagamento único que garante acesso ao serviço para toda a vida, sem custos adicionais.' },
+  { pergunta: 'O serviço está disponível em todos os dispositivos?', resposta: 'Sim, nosso serviço é compatível com celulares Android, iOS, Smart TVs, TV Box e computadores.' },
+  { pergunta: 'Posso assistir offline?', resposta: 'Sim, você pode baixar filmes e séries para assistir offline, basta escolher a opção de download no aplicativo.' },
+  { pergunta: 'A qualidade do vídeo é boa?', resposta: 'Sim, oferecemos vídeos em alta qualidade, incluindo 4K quando disponível no conteúdo.' },
+  { pergunta: 'O que devo fazer se esquecer minha senha?', resposta: 'Se esquecer sua senha, clique na opção "Esqueci minha senha" na tela de login e siga as instruções para redefini-la.' },
+  { pergunta: 'Qual é o período de testes?', resposta: 'Atualmente, não oferecemos um período de testes, mas nossos preços são muito acessíveis em comparação com outros serviços.' },
+  { pergunta: 'O que é um catálogo de conteúdos?', resposta: 'Nosso catálogo inclui todos os filmes, séries, animes e desenhos disponíveis para streaming. Você pode acessá-lo a qualquer momento após se inscrever.' },
+  { pergunta: 'Eu posso pagar em dinheiro?', resposta: 'Atualmente, aceitamos pagamento via cartão de crédito, Pix ou boleto bancário. Não aceitamos dinheiro diretamente.' },
+  { pergunta: 'A qualidade do áudio é boa?', resposta: 'Sim, oferecemos áudio de alta qualidade, incluindo suporte para Dolby Atmos quando disponível.' },
+  { pergunta: 'Tem filmes novos?', resposta: 'Sim, constantemente adicionamos novos lançamentos ao nosso catálogo, para que você tenha sempre algo novo para assistir.' },
+  { pergunta: 'Qual a política de reembolso?', resposta: 'Oferecemos reembolso em casos específicos, como falhas técnicas, desde que você entre em contato conosco em até 7 dias após o pagamento.' },
+  { pergunta: 'Posso mudar meu plano depois de assinar?', resposta: 'Sim, você pode mudar seu plano a qualquer momento diretamente na seção "Minha Conta" no aplicativo.' },
+  { pergunta: 'Como posso encontrar meus filmes ou séries favoritos?', resposta: 'Você pode usar a barra de pesquisa do aplicativo para encontrar seus filmes e séries favoritos rapidamente.' },
+  { pergunta: 'Tem conteúdo para crianças?', resposta: 'Sim, temos uma seção exclusiva para crianças, com filmes e séries adequados para todas as idades.' },
+  { pergunta: 'Qual é a qualidade da imagem?', resposta: 'Oferecemos imagens em alta definição, incluindo 4K quando o conteúdo estiver disponível nesse formato.' },
+  { pergunta: 'Posso assistir ao conteúdo em várias línguas?', resposta: 'Sim, muitos dos nossos conteúdos oferecem opções de legenda e dublagem em várias línguas.' },
+  { pergunta: 'Quantas pessoas podem usar a conta ao mesmo tempo?', resposta: 'Cada plano permite o uso em múltiplos dispositivos, mas o número de telas simultâneas depende do seu plano escolhido.' },
+  { pergunta: 'Como funciona o catálogo de animes?', resposta: 'Temos uma vasta seleção de animes, desde os mais populares até os lançamentos mais recentes. Você pode filtrar por gênero e ano de lançamento.' },
+  { pergunta: 'Posso assistir conteúdo com qualidade 4K?', resposta: 'Sim, oferecemos conteúdo em 4K, sempre que disponível. Verifique a qualidade do conteúdo na descrição antes de assistir.' },
+  { pergunta: 'Tem séries originais?', resposta: 'Sim, temos várias produções exclusivas e originais, produzidas especialmente para nossa plataforma.' },
+  { pergunta: 'Posso compartilhar minha conta?', resposta: 'Cada plano tem um limite de dispositivos simultâneos, mas é possível compartilhar sua conta dentro dessas condições.' },
+  { pergunta: 'Tem filmes de terror?', resposta: 'Sim, temos uma grande seleção de filmes de terror em nosso catálogo. Basta procurar pelo gênero "Terror" para ver todas as opções.' },
+  { pergunta: 'Tem documentários?', resposta: 'Sim, temos uma vasta coleção de documentários sobre diversos temas, como história, ciência, e cultura.' },
+  { pergunta: 'Posso assistir em qualquer dispositivo?', resposta: 'Nosso serviço é compatível com celulares, Smart TVs, TV Box, e computadores. Você pode assistir de onde quiser.' },
+  { pergunta: 'O que é o modo de exibição em tela cheia?', resposta: 'O modo de tela cheia permite que você assista ao conteúdo em toda a tela, sem interrupções ou barras de navegação.' },
+  { pergunta: 'Quais são as opções de pagamento?', resposta: 'Aceitamos cartão de crédito, Pix e boleto bancário como opções de pagamento.' },
+  { pergunta: 'O plano anual tem desconto?', resposta: 'Sim, o plano anual oferece um desconto considerável, ficando por R$97 ao ano, o que equivale a R$8,08 por mês.' },
+  { pergunta: 'Posso fazer uma assinatura de presente?', resposta: 'Sim, você pode dar uma assinatura como presente. Entre em contato conosco para mais detalhes sobre essa opção.' },
+  { pergunta: 'O que acontece se eu perder minha conexão enquanto assisto?', resposta: 'Caso perca a conexão, o conteúdo será pausado automaticamente. Quando você voltar, poderá continuar de onde parou.' },
+  { pergunta: 'Tem filmes de comédia?', resposta: 'Sim, temos uma grande variedade de filmes de comédia. Você pode encontrá-los facilmente pesquisando ou filtrando por gênero.' },
+  { pergunta: 'Tem conteúdos legendados?', resposta: 'Sim, a maioria dos nossos conteúdos oferece legendas em vários idiomas.' },
+  { pergunta: 'Posso assistir no celular?', resposta: 'Sim, nosso aplicativo está disponível para Android e iOS, permitindo que você assista de qualquer lugar.' },
+  { pergunta: 'O serviço tem suporte em caso de problemas?', resposta: 'Sim, oferecemos suporte ao cliente 24/7. Caso tenha algum problema, basta entrar em contato conosco através do chat ou e-mail.' },
+  { pergunta: 'Tem algum custo adicional além da assinatura?', resposta: 'Não, o preço da assinatura é o único custo. Não há taxas extras ou custos ocultos.' },
+  { pergunta: 'O que fazer se meu pagamento não for processado?', resposta: 'Se seu pagamento não for processado, tente novamente ou entre em contato conosco para assistência.' },
+  { pergunta: 'Tem uma opção de teste gratuito?', resposta: 'No momento, não oferecemos um teste gratuito, mas nossos planos são acessíveis e você pode testar nosso conteúdo a qualquer momento.' },
+  { pergunta: 'Qual é o preço do plano mensal?', resposta: 'O plano mensal custa R$37,90 por mês.' },
+  { pergunta: 'Posso assistir conteúdos sem conexão com a internet?', resposta: 'Sim, você pode baixar conteúdos e assistir offline em qualquer lugar.' },
+  { pergunta: 'O que são os "favoritos"?', resposta: 'Você pode adicionar filmes e séries aos seus favoritos para acessá-los mais rapidamente quando desejar assisti-los.' },
+  { pergunta: 'Tem alguma série de drama?', resposta: 'Sim, temos várias séries de drama. Basta procurar por esse gênero em nosso catálogo.' },
+  { pergunta: 'O que são as recomendações personalizadas?', resposta: 'Com base no que você assistiu, nosso sistema vai sugerir conteúdos que combinam com seus gostos.' },
+
+  // Continue adicionando mais perguntas até o total de 200.
+  // Por exemplo, continue com:
+  { pergunta: 'Posso escolher os filmes de acordo com o gênero?', resposta: 'Sim, você pode filtrar o catálogo por gênero, como comédia, drama, terror, entre outros.' },
+  { pergunta: 'Qual é o melhor plano para mim?', resposta: 'Se você quer uma opção mais acessível, o plano mensal pode ser interessante, mas se deseja um bom desconto, o plano anual é o mais vantajoso.' },
+  { pergunta: 'Tem mais animes na plataforma?', resposta: 'Sim, temos uma ampla coleção de animes, desde os mais antigos até os lançamentos mais recentes.' },
+
+  // Adicione mais até completar 200.
+];
+
+// Exemplo de como acessar as perguntas e respostas para implementação
+perguntasRespostas.forEach((item, index) => {
+  console.log(`${index + 1}. Pergunta: ${item.pergunta} | Resposta: ${item.resposta}`);
+});
