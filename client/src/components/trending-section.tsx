@@ -29,8 +29,8 @@ export default function TrendingSection() {
           {/* Espaço para vídeo do YouTube */}
           <div className="mb-12 text-center">
             <div className="bg-dark-primary rounded-xl p-8 max-w-4xl mx-auto">
-              <h3 className="text-2xl font-bold mb-4 text-white">
-                Veja como funciona o Megaflix
+              <h3 className="text-3xl font-bold mb-4 text-white">
+                Leve mais 1 mês por apenas 9,90!
               </h3>
               <div className="relative aspect-video bg-gray-800 rounded-lg overflow-hidden">
                 <iframe
