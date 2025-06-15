@@ -19,13 +19,23 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Valor inválido' });
     }
 
+    // Calcula o total em centavos dos itens
+    const totalAmountInCents = items.reduce((total, item) => total + item.priceInCents, 0);
+
     // Monta o payload correto para 4ForPayments API
     const pixData = {
       name: customer.name,
       email: customer.email,
       cpf: customer.document.replace(/\D/g, ''),
-      phone: customer.phone?.replace(/\D/g, '') || '',
+      phone: customer.phone?.replace(/\D/g, '') || '11999999999',
       paymentMethod: "PIX",
+      amount: totalAmountInCents,
+      traceable: true,
+      items: items.map(item => ({
+        title: item.name,
+        unitPrice: item.priceInCents,
+        quantity: item.quantity || 1
+      })),
       cep: "01000000",
       street: "Rua Exemplo",
       number: "123",
