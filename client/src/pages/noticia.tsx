@@ -227,52 +227,6 @@ export default function Noticia() {
                     <span className="text-sm text-blue-400">📅 2 de maio nos cinemas</span>
                   </div>
                 </div>
-
-                <div className="bg-gradient-to-r from-netflix-red/20 to-red-800/20 border border-netflix-red/30 rounded-lg p-8 mt-8">
-                  <div className="text-center mb-6">
-                    <h3 className="text-2xl font-bold text-white mb-4">
-                      🎬 Todos esses filmes estarão no Megaflix!
-                    </h3>
-                    <p className="text-xl text-gray-300 mb-6">
-                      Não perca nenhum lançamento de 2025. Com o Megaflix, você tem acesso completo aos maiores sucessos do cinema, séries exclusivas, animes e muito mais - tudo em uma única plataforma.
-                    </p>
-                  </div>
-                  
-                  <div className="grid md:grid-cols-3 gap-6 mb-6">
-                    <div className="text-center">
-                      <div className="text-3xl font-bold text-netflix-red mb-2">14.000+</div>
-                      <div className="text-gray-300">Filmes</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-3xl font-bold text-netflix-red mb-2">12.000+</div>
-                      <div className="text-gray-300">Séries</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-3xl font-bold text-netflix-red mb-2">500+</div>
-                      <div className="text-gray-300">Canais</div>
-                    </div>
-                  </div>
-                  
-                  <div className="text-center">
-                    <p className="text-lg text-yellow-300 mb-4">
-                      💰 Economize mais de R$ 2.500 por ano vs outras plataformas!
-                    </p>
-                    <div className="flex flex-wrap justify-center gap-4">
-                      <a 
-                        href="/checkout" 
-                        className="bg-netflix-red hover:bg-red-700 text-white px-8 py-3 rounded-lg font-bold text-lg transition-colors transform hover:scale-105"
-                      >
-                        Assinar Agora
-                      </a>
-                      <a 
-                        href="/" 
-                        className="border-2 border-gray-600 hover:border-gray-400 text-white px-8 py-3 rounded-lg font-bold text-lg transition-colors"
-                      >
-                        Ver Catálogo
-                      </a>
-                    </div>
-                  </div>
-                </div>
               </div>
             </CardContent>
           </Card>
