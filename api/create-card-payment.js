@@ -1,19 +1,24 @@
 export default async function handler(req, res) {
-  // Set CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
   try {
-    const { customer, card, items, amount } = req.body;
+    // Ensure JSON response in all cases
+    res.setHeader('Content-Type', 'application/json');
+    
+    // Set CORS headers
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    // Handle preflight requests
+    if (req.method === 'OPTIONS') {
+      return res.status(200).json({ message: 'OK' });
+    }
+
+    if (req.method !== 'POST') {
+      return res.status(405).json({ error: 'Method not allowed' });
+    }
+
+    try {
+      const { customer, card, items, amount } = req.body;
 
     console.log("Received card payment request:", {
       name: customer?.name, 
@@ -259,11 +264,25 @@ export default async function handler(req, res) {
       expiresAt: cardData.expiresAt || cardData.expires_at || null
     });
 
-  } catch (error) {
-    console.error("Card function error:", error);
-    return res.status(500).json({
-      error: "Erro interno do servidor",
-      details: error.message
-    });
+    } catch (error) {
+      console.error("Card function error:", error);
+      return res.status(500).json({
+        error: "Erro interno do servidor",
+        details: error.message
+      });
+    }
+  } catch (globalError) {
+    // Global error handler to ensure JSON response in all cases
+    console.error("Global card function error:", globalError);
+    try {
+      res.setHeader('Content-Type', 'application/json');
+      return res.status(500).json({
+        error: "Erro crítico do servidor",
+        details: "Falha na função de pagamento cartão"
+      });
+    } catch (responseError) {
+      // Last resort - if even JSON response fails
+      console.error("Failed to send card error response:", responseError);
+    }
   }
 }
