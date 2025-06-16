@@ -1,4 +1,13 @@
 export default async function handler(req, res) {
+  // Configuração de CORS e headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -214,8 +223,18 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Erro ao processar cartão:', error);
-    res.status(500).json({ 
-      error: 'Erro interno do servidor' 
-    });
+    console.error('Error stack:', error.stack);
+    console.error('Request body:', req.body);
+    
+    // Garantir resposta JSON válida sempre
+    try {
+      return res.status(500).json({ 
+        error: 'Erro interno do servidor',
+        message: error.message || 'Falha no processamento do cartão'
+      });
+    } catch (responseError) {
+      console.error('Erro ao enviar resposta:', responseError);
+      return res.status(500).end('{"error":"Erro interno do servidor"}');
+    }
   }
 }

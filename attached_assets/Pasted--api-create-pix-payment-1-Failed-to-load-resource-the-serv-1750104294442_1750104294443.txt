@@ -1,0 +1,116 @@
+/api/create-pix-payment:1 
+            
+            
+           Failed to load resource: the server responded with a status of 500 ()
+index-e6ERj4b7.js:287 Response status: 500
+index-e6ERj4b7.js:287 Response headers: Object
+index-e6ERj4b7.js:287 Raw response: A server error has occurred
+
+FUNCTION_INVOCATION_FAILED
+
+gru1::pnn77-1750104272522-574d6810bf14
+
+index-e6ERj4b7.js:287 JSON parse error: SyntaxError: Unexpected token 'A', "A server e"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at D (index-e6ERj4b7.js:287:58248)
+D @ index-e6ERj4b7.js:287
+index-e6ERj4b7.js:287 Failed to parse: A server error has occurred
+
+FUNCTION_INVOCATION_FAILED
+
+gru1::pnn77-1750104272522-574d6810bf14
+
+D @ index-e6ERj4b7.js:287
+index-e6ERj4b7.js:287 Erro no pagamento: Error: Resposta inválida do servidor de pagamento
+    at D (index-e6ERj4b7.js:287:58345)
+D @ index-e6ERj4b7.js:287
+index-e6ERj4b7.js:287 Erro detalhado: Object
+D @ index-e6ERj4b7.js:287
+index-e6ERj4b7.js:287 
+            
+            
+           POST https://megaflix-five.vercel.app/api/create-pix-payment 500 (Internal Server Error)
+D @ index-e6ERj4b7.js:287
+Wx @ index-e6ERj4b7.js:37
+Qx @ index-e6ERj4b7.js:37
+Kx @ index-e6ERj4b7.js:37
+gd @ index-e6ERj4b7.js:37
+rm @ index-e6ERj4b7.js:37
+(anonymous) @ index-e6ERj4b7.js:37
+Yc @ index-e6ERj4b7.js:40
+kp @ index-e6ERj4b7.js:37
+Tl @ index-e6ERj4b7.js:37
+Sc @ index-e6ERj4b7.js:37
+cy @ index-e6ERj4b7.js:37
+index-e6ERj4b7.js:287 Response status: 500
+index-e6ERj4b7.js:287 Response headers: {cache-control: 'public, max-age=0, must-revalidate', content-length: '96', content-type: 'text/plain; charset=utf-8', date: 'Mon, 16 Jun 2025 20:04:40 GMT', server: 'Vercel', …}
+index-e6ERj4b7.js:287 Raw response: A server error has occurred
+
+FUNCTION_INVOCATION_FAILED
+
+gru1::f7jqc-1750104280359-9256c75865ce
+
+index-e6ERj4b7.js:287 JSON parse error: SyntaxError: Unexpected token 'A', "A server e"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at D (index-e6ERj4b7.js:287:58248)
+D @ index-e6ERj4b7.js:287
+await in D
+Wx @ index-e6ERj4b7.js:37
+Qx @ index-e6ERj4b7.js:37
+Kx @ index-e6ERj4b7.js:37
+gd @ index-e6ERj4b7.js:37
+rm @ index-e6ERj4b7.js:37
+(anonymous) @ index-e6ERj4b7.js:37
+Yc @ index-e6ERj4b7.js:40
+kp @ index-e6ERj4b7.js:37
+Tl @ index-e6ERj4b7.js:37
+Sc @ index-e6ERj4b7.js:37
+cy @ index-e6ERj4b7.js:37
+index-e6ERj4b7.js:287 Failed to parse: A server error has occurred
+
+FUNCTION_INVOCATION_FAILED
+
+gru1::f7jqc-1750104280359-9256c75865ce
+
+D @ index-e6ERj4b7.js:287
+await in D
+Wx @ index-e6ERj4b7.js:37
+Qx @ index-e6ERj4b7.js:37
+Kx @ index-e6ERj4b7.js:37
+gd @ index-e6ERj4b7.js:37
+rm @ index-e6ERj4b7.js:37
+(anonymous) @ index-e6ERj4b7.js:37
+Yc @ index-e6ERj4b7.js:40
+kp @ index-e6ERj4b7.js:37
+Tl @ index-e6ERj4b7.js:37
+Sc @ index-e6ERj4b7.js:37
+cy @ index-e6ERj4b7.js:37
+index-e6ERj4b7.js:287 Erro no pagamento: Error: Resposta inválida do servidor de pagamento
+    at D (index-e6ERj4b7.js:287:58345)
+D @ index-e6ERj4b7.js:287
+await in D
+Wx @ index-e6ERj4b7.js:37
+Qx @ index-e6ERj4b7.js:37
+Kx @ index-e6ERj4b7.js:37
+gd @ index-e6ERj4b7.js:37
+rm @ index-e6ERj4b7.js:37
+(anonymous) @ index-e6ERj4b7.js:37
+Yc @ index-e6ERj4b7.js:40
+kp @ index-e6ERj4b7.js:37
+Tl @ index-e6ERj4b7.js:37
+Sc @ index-e6ERj4b7.js:37
+cy @ index-e6ERj4b7.js:37
+index-e6ERj4b7.js:287 Erro detalhado: {message: 'Resposta inválida do servidor de pagamento', stack: 'Error: Resposta inválida do servidor de pagamento\n…ve.vercel.app/assets/index-e6ERj4b7.js:287:58345)', name: 'Error'}
+D @ index-e6ERj4b7.js:287
+await in D
+Wx @ index-e6ERj4b7.js:37
+Qx @ index-e6ERj4b7.js:37
+Kx @ index-e6ERj4b7.js:37
+gd @ index-e6ERj4b7.js:37
+rm @ index-e6ERj4b7.js:37
+(anonymous) @ index-e6ERj4b7.js:37
+Yc @ index-e6ERj4b7.js:40
+kp @ index-e6ERj4b7.js:37
+Tl @ index-e6ERj4b7.js:37
+Sc @ index-e6ERj4b7.js:37
+cy @ index-e6ERj4b7.js:37
