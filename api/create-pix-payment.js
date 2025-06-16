@@ -19,6 +19,18 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Valor inválido' });
     }
 
+    // Validação básica de CPF (11 dígitos)
+    const cpfClean = customer.document.replace(/\D/g, '');
+    if (cpfClean.length !== 11) {
+      return res.status(400).json({ error: 'CPF deve conter 11 dígitos' });
+    }
+
+    // Validação de email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(customer.email)) {
+      return res.status(400).json({ error: 'Email inválido' });
+    }
+
     // Calcula o total em centavos dos itens
     const totalAmountInCents = items.reduce((total, item) => total + item.priceInCents, 0);
 
@@ -83,18 +95,12 @@ export default async function handler(req, res) {
         console.error('Erro 4ForPayments Status:', response.status);
         console.error('Erro 4ForPayments Body:', responseText);
         
-        // Se a API retornar erro 500, usar modo demonstração como fallback
+        // Se a API retornar erro 500, retornar erro informativo
         if (response.status === 500) {
-          console.log('API indisponível, usando modo demonstração');
-          data = {
-            id: `pix_demo_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-            status: "waiting_payment",
-            pix: {
-              qr_code: "https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=00020126580014br.gov.bcb.pix0136123e4567-e12b-12d1-a456-426614174000520400005303986540510.005802BR5925MEGAFLIX%20STREAMING%20LTDA6009SAO%20PAULO62070503***630469F0",
-              qr_code_text: "00020126580014br.gov.bcb.pix0136123e4567-e12b-12d1-a456-426614174000520400005303986540510.005802BR5925MEGAFLIX STREAMING LTDA6009SAO PAULO62070503***630469F0",
-              url: "https://pix.example.com/pay/demo"
-            }
-          };
+          console.log('API 4ForPayments retornando erro 500');
+          return res.status(500).json({ 
+            error: 'Serviço de pagamento temporariamente indisponível. Tente novamente em alguns instantes ou entre em contato com o suporte.' 
+          });
         } else {
           return res.status(400).json({ 
             error: `Erro na API de pagamento (${response.status}): ${responseText}` 
@@ -127,10 +133,10 @@ export default async function handler(req, res) {
     // Extrai dados necessários da resposta
     const paymentResponse = {
       id: data.id,
-      status: data.status,
-      qrCode: data.pix?.qr_code || data.pixQrCode || null,
-      qrCodeText: data.pix?.qr_code_text || data.pixCode || null,
-      pixUrl: data.pix?.url || data.pixQrCode || null
+      status: data.status === "PENDING" ? "waiting_payment" : data.status,
+      qrCode: data.pixQrCode || null,
+      qrCodeText: data.pixCode || null,
+      pixUrl: data.pixQrCode || null
     };
 
     console.log('Resposta final sendo enviada:', paymentResponse);

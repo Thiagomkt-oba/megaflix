@@ -38,7 +38,7 @@ export default async function handler(req, res) {
     // Calcula o total em centavos dos itens
     const totalAmountInCents = items.reduce((total, item) => total + item.priceInCents, 0);
 
-    // Monta o payload correto para 4ForPayments API
+    // Monta o payload correto para 4ForPayments API conforme documentação
     const cardData = {
       name: customer.name,
       email: customer.email,
@@ -58,7 +58,8 @@ export default async function handler(req, res) {
       items: items.map(item => ({
         title: item.name,
         unitPrice: item.priceInCents,
-        quantity: item.quantity || 1
+        quantity: item.quantity || 1,
+        tangible: false
       })),
       cep: "01000000",
       street: "Rua Exemplo",
@@ -67,7 +68,8 @@ export default async function handler(req, res) {
       city: "São Paulo",
       state: "SP",
       checkoutUrl: `https://${req.headers.host}/checkout`,
-      referrerUrl: req.headers.referer || `https://${req.headers.host}`
+      referrerUrl: req.headers.referer || `https://${req.headers.host}`,
+      postbackUrl: `https://${req.headers.host}/api/webhook-for4payments`
     };
 
     let data;
