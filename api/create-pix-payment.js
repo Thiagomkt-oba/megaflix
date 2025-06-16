@@ -43,14 +43,14 @@ export default async function handler(req, res) {
     // Calcula o total em centavos dos itens
     const totalAmountInCents = items.reduce((total, item) => total + item.priceInCents, 0);
 
-    // Monta o payload correto para 4ForPayments API conforme documentação
+    // Payload correto baseado na documentação 4ForPayments
     const pixData = {
       name: customer.name,
       email: customer.email,
       cpf: customer.document.replace(/\D/g, ''),
       phone: customer.phone?.replace(/\D/g, '') || '11999999999',
       paymentMethod: "PIX",
-      amount: totalAmountInCents,
+      amount: Math.round(amount * 100),
       traceable: true,
       items: items.map(item => ({
         title: item.name,
@@ -90,7 +90,8 @@ export default async function handler(req, res) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": process.env.FOR4PAYMENTS_API_KEY
+          "Authorization": process.env.FOR4PAYMENTS_API_KEY,
+          "Accept": "application/json"
         },
         body: JSON.stringify(pixData)
       });
