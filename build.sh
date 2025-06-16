@@ -1,11 +1,14 @@
 #!/bin/bash
 # Build script for Vercel deployment
 
-echo "Building frontend..."
-npm run build
+echo "Building frontend with Vite..."
+npx vite build
 
-echo "Copying build files..."
-mkdir -p dist/public
-cp -r client/dist/* dist/public/
+echo "Creating dist directory..."
+mkdir -p dist
 
-echo "Build completed successfully!"
+echo "Copying frontend files to dist..."
+cp -r client/dist/* dist/
+
+echo "Build completed - dist directory created with frontend files"
+ls -la dist/

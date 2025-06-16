@@ -1,13 +1,8 @@
 {
   "version": 2,
+  "buildCommand": "node vercel-build.js",
+  "outputDirectory": "dist",
   "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "client/dist"
-      }
-    },
     {
       "src": "api/index.js",
       "use": "@vercel/node"
@@ -20,11 +15,11 @@
     },
     {
       "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
-      "dest": "/$1"
+      "dest": "/dist/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/dist/index.html"
     }
   ],
   "env": {
