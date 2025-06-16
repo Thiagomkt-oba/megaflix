@@ -1,13 +1,13 @@
 export default async function handler(req, res) {
-  // Configuração de CORS e headers
+  // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  
+
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
-  
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -15,21 +15,25 @@ export default async function handler(req, res) {
   try {
     const { customer, card, items, amount } = req.body;
 
-    // Log dos dados recebidos para debug
-    console.log('=== CHECKOUT CARD PAYMENT DEBUG ===');
-    console.log('Customer:', customer);
-    console.log('Card:', { ...card, number: card?.number ? `****${card.number.slice(-4)}` : 'undefined', cvv: '***' });
-    console.log('Items:', items);
-    console.log('Amount:', amount);
-    console.log('=====================================');
+    console.log("Received card payment request:", {
+      name: customer?.name, 
+      email: customer?.email, 
+      cpf: customer?.document?.substring(0, 3) + "...", 
+      amount,
+      cardNumber: card?.number?.substring(0, 4) + "****"
+    });
 
-    // Validação dos dados
+    // Validate required fields
     if (!customer?.name || !customer?.email || !customer?.document) {
-      return res.status(400).json({ error: 'Dados do cliente obrigatórios' });
+      return res.status(400).json({
+        error: "Campos obrigatórios: nome, email, cpf"
+      });
     }
 
-    if (!card?.number || !card?.expiryDate || !card?.cvv || !card?.holderName) {
-      return res.status(400).json({ error: 'Dados do cartão obrigatórios' });
+    if (!card?.number || !card?.expiryDate || !card?.cvv || !card?.name) {
+      return res.status(400).json({
+        error: "Dados do cartão obrigatórios: número, validade, CVV, nome"
+      });
     }
 
     if (!items || !Array.isArray(items) || items.length === 0) {
@@ -40,173 +44,192 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Valor inválido' });
     }
 
-    // Processa dados do cartão
-    const [month, year] = card.expiryDate.split('/');
-    const fullYear = year.length === 2 ? `20${year}` : year;
+    // Clean phone and CPF
+    const cleanPhone = customer.phone?.replace(/\D/g, '') || '11999999999';
+    const cleanCpf = customer.document.replace(/\D/g, '');
 
-    // Calcula o total em centavos dos itens
-    const totalAmountInCents = items.reduce((total, item) => total + item.priceInCents, 0);
+    // Validate phone and CPF format according to API requirements
+    if (cleanCpf.length !== 11) {
+      return res.status(400).json({
+        error: "CPF deve ter exatamente 11 dígitos",
+        details: `CPF fornecido tem ${cleanCpf.length} dígitos`
+      });
+    }
 
-    // Monta o payload correto para 4ForPayments API conforme documentação
-    const cardData = {
-      name: customer.name,
-      email: customer.email,
-      cpf: customer.document.replace(/\D/g, ''),
-      phone: customer.phone?.replace(/\D/g, '') || '11999999999',
-      paymentMethod: "CREDIT_CARD",
-      creditCard: {
-        number: card.number.replace(/\D/g, ''),
-        holder_name: card.holderName,
-        cvv: card.cvv,
-        expiration_month: month,
-        expiration_year: fullYear,
-        installments: 1
-      },
-      amount: totalAmountInCents,
+    if (cleanPhone.length < 8 || cleanPhone.length > 12) {
+      return res.status(400).json({
+        error: "Telefone deve ter entre 8 e 12 dígitos",
+        details: `Telefone fornecido tem ${cleanPhone.length} dígitos`
+      });
+    }
+
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(customer.email)) {
+      return res.status(400).json({ error: 'Email inválido' });
+    }
+
+    // Validate API key
+    if (!process.env.FOR4PAYMENTS_API_KEY) {
+      console.error("FOR4PAYMENTS_API_KEY not found in environment");
+      return res.status(500).json({
+        error: "Configuração da API não encontrada",
+        details: "FOR4PAYMENTS_API_KEY não configurada"
+      });
+    }
+
+    // Official For4Payments API endpoint from documentation
+    const endpoint = "https://app.for4payments.com.br/api/v1/transaction.purchase";
+    
+    // Calculate amounts ensuring minimum values
+    const amountInCents = Math.max(Math.round(amount * 100), 500);
+
+    // Parse expiry date (MM/YY or MM/YYYY)
+    const [expMonth, expYear] = card.expiryDate.split('/');
+    const fullYear = expYear.length === 2 ? `20${expYear}` : expYear;
+    
+    // Prepare payment data according to official API documentation
+    const paymentData = {
+      name: customer.name.trim(),
+      email: customer.email.trim().toLowerCase(),
+      cpf: cleanCpf,
+      phone: cleanPhone,
+      paymentMethod: "CARD",
+      amount: amountInCents,
       traceable: true,
       items: items.map(item => ({
-        title: item.name,
-        unitPrice: item.priceInCents,
+        unitPrice: item.priceInCents || amountInCents,
+        title: item.name || "Plano Megaflix",
         quantity: item.quantity || 1,
         tangible: false
       })),
+      externalId: `megaflix_card_${Date.now()}`,
       cep: "01000000",
       street: "Rua Exemplo",
       number: "123",
       district: "Centro",
       city: "São Paulo",
       state: "SP",
-      checkoutUrl: `https://${req.headers.host}/checkout`,
-      referrerUrl: req.headers.referer || `https://${req.headers.host}`,
-      postbackUrl: `https://${req.headers.host}/api/webhook-for4payments`
+      postbackUrl: `https://${req.headers.host}/api/webhook-for4payments`,
+      // Card specific fields
+      cardNumber: card.number.replace(/\s/g, ''),
+      cardHolderName: card.name.trim(),
+      cardExpirationMonth: expMonth.padStart(2, '0'),
+      cardExpirationYear: fullYear,
+      cardCvv: card.cvv,
+      installments: 1
     };
 
-    let data;
+    console.log("Sending card request to For4Payments:", JSON.stringify({
+      ...paymentData,
+      cpf: "***HIDDEN***",
+      cardNumber: "****",
+      cardCvv: "***"
+    }, null, 2));
 
-    // Verifica se a API key está configurada
-    if (!process.env.FOR4PAYMENTS_API_KEY) {
-      // Versão de demonstração - simula resposta da API
-      data = {
-        id: `card_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        status: "approved"
-      };
-    } else {
-      // Log dos dados enviados para 4ForPayments
-      console.log('=== ENVIANDO PARA 4FORPAYMENTS ===');
-      console.log('URL:', "https://app.for4payments.com.br/api/v1/transaction.purchase");
-      console.log('Headers:', {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
         "Content-Type": "application/json",
-        "Authorization": process.env.FOR4PAYMENTS_API_KEY ? "****" + process.env.FOR4PAYMENTS_API_KEY.slice(-4) : "undefined"
-      });
-      console.log('Payload:', { 
-        ...cardData, 
-        creditCard: { 
-          ...cardData.creditCard, 
-          number: `****${cardData.creditCard.number.slice(-4)}`, 
-          cvv: '***' 
-        } 
-      });
+        "Authorization": process.env.FOR4PAYMENTS_API_KEY
+      },
+      body: JSON.stringify(paymentData)
+    });
 
-      // Chama a API da 4ForPayments
-      const response = await fetch("https://app.for4payments.com.br/api/v1/transaction.purchase", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": process.env.FOR4PAYMENTS_API_KEY
-        },
-        body: JSON.stringify(cardData)
-      });
+    console.log(`For4Payments card response status: ${response.status}`);
+    
+    const responseText = await response.text();
+    console.log(`For4Payments card response: ${responseText.substring(0, 1000)}...`);
 
-      const responseText = await response.text();
-      console.log('=== RESPOSTA 4FORPAYMENTS ===');
-      console.log('Status:', response.status);
-      console.log('Raw Response:', responseText);
-      console.log('=============================');
-
-      if (!response.ok) {
-        console.error('Erro 4ForPayments Status:', response.status);
-        console.error('Erro 4ForPayments Body:', responseText);
-        return res.status(400).json({ 
-          error: `Erro ${response.status}: ${responseText}` 
-        });
-      }
-
+    if (!response.ok) {
+      console.error(`For4Payments Card API Error: ${response.status}`);
+      
+      let parsedError = null;
       try {
-        data = JSON.parse(responseText);
-        console.log('Dados parseados com sucesso:', data);
-      } catch (parseError) {
-        console.error('Erro ao parsear JSON:', parseError);
-        console.error('Response body que causou erro:', responseText);
-        return res.status(500).json({ 
-          error: 'Resposta inválida da API de pagamento. Verifique os logs do servidor.' 
+        parsedError = JSON.parse(responseText);
+      } catch (e) {
+        console.error("Could not parse error response as JSON");
+      }
+      
+      if (response.status === 500) {
+        return res.status(500).json({
+          error: "Erro interno da For4Payments",
+          status: response.status,
+          details: parsedError?.message || "Erro ao processar pagamento com cartão",
+          code: parsedError?.code || "INTERNAL_SERVER_ERROR",
+          suggestions: [
+            "Verificar se a conta For4Payments está ativa e aprovada",
+            "Confirmar se pagamentos com cartão estão habilitados",
+            "Validar se a chave API não expirou",
+            "Verificar dados do cartão"
+          ]
         });
       }
-    }
-
-    // Validação da estrutura de resposta
-    if (!data || !data.id || !data.status) {
-      console.error('Resposta da API inválida - campos obrigatórios ausentes:', data);
-      return res.status(500).json({ 
-        error: 'Dados de pagamento incompletos recebidos da API' 
+      
+      return res.status(500).json({
+        error: "Erro na API For4Payments",
+        status: response.status,
+        details: responseText.substring(0, 200)
       });
     }
 
-    // Extrai dados necessários da resposta
-    const paymentResponse = {
-      id: data.id,
-      status: data.status,
-      authorizationCode: data.authorization_code || null,
-      transactionId: data.transaction_id || null
-    };
+    let cardData;
+    try {
+      cardData = JSON.parse(responseText);
+    } catch (e) {
+      console.error("Failed to parse For4Payments card response as JSON:", e);
+      return res.status(500).json({
+        error: "Resposta inválida da API For4Payments",
+        details: "Resposta não é um JSON válido"
+      });
+    }
 
-    console.log('Resposta final sendo enviada:', paymentResponse);
-
-    // Integração com Utmify se configurado
-    if (process.env.UTMIFY_API_TOKEN && data.id) {
+    // Send order data to Utmify if configured
+    if (process.env.UTMIFY_API_TOKEN) {
       try {
-        const urlParams = new URLSearchParams(req.headers.referer?.split('?')[1] || '');
-        
+        const urlParams = new URLSearchParams(req.url?.split('?')[1] || '');
         const utmifyOrderData = {
-          orderId: data.id,
+          orderId: cardData.id || `megaflix_card_${Date.now()}`,
           platform: "Megaflix",
           paymentMethod: "credit_card",
-          status: data.status === "approved" ? "paid" : "waiting_payment",
-          createdAt: new Date().toISOString().replace('T', ' ').split('.')[0],
-          approvedDate: data.status === "approved" ? new Date().toISOString().replace('T', ' ').split('.')[0] : null,
+          status: cardData.status === "APPROVED" ? "approved" : "waiting_payment",
+          createdAt: new Date().toISOString().slice(0, 19).replace('T', ' '),
+          approvedDate: cardData.status === "APPROVED" ? new Date().toISOString().slice(0, 19).replace('T', ' ') : null,
           refundedAt: null,
           customer: {
             name: customer.name,
             email: customer.email,
-            phone: customer.phone || null,
-            document: customer.document.replace(/\D/g, ''),
+            phone: cleanPhone,
+            document: cleanCpf,
             country: "BR",
-            ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+            ip: req.headers['x-forwarded-for']?.split(',')[0] || req.headers['x-real-ip'] || "127.0.0.1"
           },
           products: items.map(item => ({
             id: item.id || "megaflix-subscription",
-            name: item.name,
+            name: item.name || "Plano Megaflix",
             planId: null,
             planName: null,
             quantity: item.quantity || 1,
-            priceInCents: item.priceInCents || Math.round(amount * 100)
+            priceInCents: item.priceInCents || amountInCents
           })),
           trackingParameters: {
-            src: urlParams.get('src'),
-            sck: urlParams.get('sck'),
-            utm_source: urlParams.get('utm_source'),
-            utm_campaign: urlParams.get('utm_campaign'),
-            utm_medium: urlParams.get('utm_medium'),
-            utm_content: urlParams.get('utm_content'),
-            utm_term: urlParams.get('utm_term')
+            src: urlParams.get('src') || null,
+            sck: urlParams.get('sck') || null,
+            utm_source: urlParams.get('utm_source') || null,
+            utm_campaign: urlParams.get('utm_campaign') || null,
+            utm_medium: urlParams.get('utm_medium') || null,
+            utm_content: urlParams.get('utm_content') || null,
+            utm_term: urlParams.get('utm_term') || null
           },
           commission: {
-            totalPriceInCents: Math.round(amount * 100),
-            gatewayFeeInCents: Math.round(amount * 100 * 0.05),
-            userCommissionInCents: Math.round(amount * 100 * 0.95)
-          }
+            totalPriceInCents: amountInCents,
+            gatewayFeeInCents: Math.round(amountInCents * 0.05),
+            userCommissionInCents: Math.round(amountInCents * 0.95)
+          },
+          isTest: false
         };
 
-        await fetch("https://api.utmify.com.br/api-credentials/orders", {
+        const utmifyResponse = await fetch("https://api.utmify.com.br/api-credentials/orders", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -214,27 +237,33 @@ export default async function handler(req, res) {
           },
           body: JSON.stringify(utmifyOrderData)
         });
-      } catch (utmifyError) {
-        console.error('Erro Utmify:', utmifyError);
+
+        if (utmifyResponse.ok) {
+          console.log("Card order data sent to Utmify successfully");
+        } else {
+          console.error("Utmify API Error:", await utmifyResponse.text());
+        }
+      } catch (error) {
+        console.error("Error sending card order to Utmify:", error);
       }
     }
 
-    res.status(200).json(paymentResponse);
+    // Return card payment data
+    return res.status(200).json({
+      id: cardData.id || cardData.transactionId || `megaflix_card_${Date.now()}`,
+      status: cardData.status || "pending",
+      amount: amount,
+      paymentMethod: "credit_card",
+      authorizationCode: cardData.authorizationCode || null,
+      transactionId: cardData.transactionId || cardData.id || null,
+      expiresAt: cardData.expiresAt || cardData.expires_at || null
+    });
 
   } catch (error) {
-    console.error('Erro ao processar cartão:', error);
-    console.error('Error stack:', error.stack);
-    console.error('Request body:', req.body);
-    
-    // Garantir resposta JSON válida sempre
-    try {
-      return res.status(500).json({ 
-        error: 'Erro interno do servidor',
-        message: error.message || 'Falha no processamento do cartão'
-      });
-    } catch (responseError) {
-      console.error('Erro ao enviar resposta:', responseError);
-      return res.status(500).end('{"error":"Erro interno do servidor"}');
-    }
+    console.error("Card function error:", error);
+    return res.status(500).json({
+      error: "Erro interno do servidor",
+      details: error.message
+    });
   }
 }
