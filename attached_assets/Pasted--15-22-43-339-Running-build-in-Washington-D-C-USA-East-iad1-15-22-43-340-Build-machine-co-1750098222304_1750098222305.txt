@@ -1,0 +1,41 @@
+[15:22:43.339] Running build in Washington, D.C., USA (East) – iad1
+[15:22:43.340] Build machine configuration: 2 cores, 8 GB
+[15:22:43.354] Cloning github.com/Thiagomkt-oba/megaflix (Branch: main, Commit: 98c22fb)
+[15:22:43.362] Skipping build cache, deployment was triggered without cache.
+[15:22:43.797] Cloning completed: 443.000ms
+[15:22:44.140] Running "vercel build"
+[15:22:44.587] Vercel CLI 42.2.0
+[15:22:44.729] WARN! Due to `builds` existing in your configuration file, the Build and Development Settings defined in your Project Settings will not apply. Learn More: https://vercel.link/unused-build-settings
+[15:22:45.276] Installing dependencies...
+[15:22:49.833] npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+[15:22:49.846] npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+[15:22:55.045] 
+[15:22:55.046] added 485 packages in 9s
+[15:22:55.047] 
+[15:22:55.047] 64 packages are looking for funding
+[15:22:55.047]   run `npm fund` for details
+[15:22:55.124] Running "npm run build"
+[15:22:55.237] 
+[15:22:55.238] > rest-express@1.0.0 build
+[15:22:55.238] > vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+[15:22:55.238] 
+[15:22:55.530] [36mvite v5.4.14 [32mbuilding for production...[36m[39m
+[15:22:55.582] transforming...
+[15:22:55.875] Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+[15:22:55.875]   npx update-browserslist-db@latest
+[15:22:55.876]   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[15:22:59.949] [32m✓[39m 1736 modules transformed.
+[15:23:00.276] rendering chunks...
+[15:23:00.285] computing gzip size...
+[15:23:00.301] [2m../dist/public/[22m[32mindex.html                 [39m[1m[2m  1.16 kB[22m[1m[22m[2m │ gzip:   0.63 kB[22m
+[15:23:00.302] [2m../dist/public/[22m[2massets/[22m[35mindex-D2F0VF2E.css  [39m[1m[2m 89.00 kB[22m[1m[22m[2m │ gzip:  14.84 kB[22m
+[15:23:00.302] [2m../dist/public/[22m[2massets/[22m[36mindex-C2piO37A.js   [39m[1m[2m386.19 kB[22m[1m[22m[2m │ gzip: 119.49 kB[22m
+[15:23:00.303] [32m✓ built in 4.75s[39m
+[15:23:00.337] 
+[15:23:00.337]   dist/index.js  36.3kb
+[15:23:00.337] 
+[15:23:00.337] ⚡ Done in 5ms
+[15:23:00.354] Error: No Output Directory named "dist" found after the Build completed. You can configure the Output Directory in your Project Settings.
+[15:23:00.354] Learn More: https://vercel.link/missing-public-directory
+[15:23:00.621] 
+[15:23:03.139] Exiting build container
