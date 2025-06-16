@@ -128,6 +128,7 @@ Changelog:
 - June 16, 2025. Fixed critical payment API error "Resposta invalidada do servidor de pagamento"
 - June 16, 2025. Implemented proper 4ForPayments API structure with CPF/email validation and authentic payment processing
 - June 16, 2025. Resolved Vercel deployment configuration with correct dist directory mapping for production builds
+- June 16, 2025. Removed automatic desktop redirection - all devices now access home page directly
 
 ## User Preferences
 

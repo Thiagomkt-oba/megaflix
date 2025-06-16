@@ -18,11 +18,7 @@ export function useDeviceDetection() {
       setDeviceType('desktop');
     }
 
-    // Redirecionamento para desktop na home
-    const currentPath = window.location.pathname;
-    if (!isMobile && !isTablet && currentPath === '/') {
-      setLocation('/noticia');
-    }
+    // Redirecionamento removido - permitir acesso desktop na home
   }, [setLocation]);
 
   return { deviceType };
