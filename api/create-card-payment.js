@@ -106,28 +106,49 @@ export default async function handler(req, res) {
         body: JSON.stringify(cardData)
       });
 
-      data = await response.json();
-
+      const responseText = await response.text();
       console.log('=== RESPOSTA 4FORPAYMENTS ===');
       console.log('Status:', response.status);
-      console.log('Response:', data);
+      console.log('Raw Response:', responseText);
       console.log('=============================');
 
       if (!response.ok) {
-        console.error('Erro 4ForPayments:', data);
+        console.error('Erro 4ForPayments Status:', response.status);
+        console.error('Erro 4ForPayments Body:', responseText);
         return res.status(400).json({ 
-          error: data.message || 'Erro ao processar cartão' 
+          error: `Erro ${response.status}: ${responseText}` 
         });
       }
+
+      try {
+        data = JSON.parse(responseText);
+        console.log('Dados parseados com sucesso:', data);
+      } catch (parseError) {
+        console.error('Erro ao parsear JSON:', parseError);
+        console.error('Response body que causou erro:', responseText);
+        return res.status(500).json({ 
+          error: 'Resposta inválida da API de pagamento. Verifique os logs do servidor.' 
+        });
+      }
+    }
+
+    // Validação da estrutura de resposta
+    if (!data || !data.id || !data.status) {
+      console.error('Resposta da API inválida - campos obrigatórios ausentes:', data);
+      return res.status(500).json({ 
+        error: 'Dados de pagamento incompletos recebidos da API' 
+      });
     }
 
     // Extrai dados necessários da resposta
     const paymentResponse = {
       id: data.id,
       status: data.status,
-      authorizationCode: data.authorization_code,
-      transactionId: data.transaction_id
+      authorizationCode: data.authorization_code || null,
+      transactionId: data.transaction_id || null
     };
+
+    console.log('Resposta final sendo enviada:', paymentResponse);
 
     // Integração com Utmify se configurado
     if (process.env.UTMIFY_API_TOKEN && data.id) {

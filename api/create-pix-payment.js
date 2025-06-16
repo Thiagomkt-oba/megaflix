@@ -24,26 +24,34 @@ export default async function handler(req, res) {
 
     // Monta o payload correto para 4ForPayments API
     const pixData = {
-      name: customer.name,
-      email: customer.email,
-      cpf: customer.document.replace(/\D/g, ''),
-      phone: customer.phone?.replace(/\D/g, '') || '11999999999',
-      paymentMethod: "PIX",
-      amount: totalAmountInCents,
-      traceable: true,
-      items: items.map(item => ({
-        title: item.name,
-        unitPrice: item.priceInCents,
+      customer: {
+        name: customer.name,
+        email: customer.email,
+        cpf: customer.document.replace(/\D/g, ''),
+        phone: customer.phone?.replace(/\D/g, '') || '11999999999'
+      },
+      payment: {
+        method: "pix",
+        amount: totalAmountInCents
+      },
+      products: items.map(item => ({
+        name: item.name,
+        price: item.priceInCents,
         quantity: item.quantity || 1
       })),
-      cep: "01000000",
-      street: "Rua Exemplo",
-      number: "123",
-      district: "Centro",
-      city: "São Paulo",
-      state: "SP",
-      checkoutUrl: `https://${req.headers.host}/checkout`,
-      referrerUrl: req.headers.referer || `https://${req.headers.host}`
+      billing: {
+        street: "Rua Exemplo",
+        number: "123",
+        district: "Centro",
+        city: "São Paulo",
+        state: "SP",
+        zipcode: "01000000"
+      },
+      urls: {
+        success: `https://${req.headers.host}/payment-success`,
+        cancel: `https://${req.headers.host}/checkout`,
+        notification: `https://${req.headers.host}/api/webhook-for4payments`
+      }
     };
 
     let data;
@@ -86,23 +94,36 @@ export default async function handler(req, res) {
 
       try {
         data = JSON.parse(responseText);
+        console.log('Dados parseados com sucesso:', data);
       } catch (parseError) {
         console.error('Erro ao parsear JSON:', parseError);
         console.error('Response body que causou erro:', responseText);
+        console.error('Response status:', response.status);
+        console.error('Response headers:', Object.fromEntries(response.headers.entries()));
         return res.status(500).json({ 
-          error: 'Resposta inválida da API de pagamento' 
+          error: 'Resposta inválida da API de pagamento. Verifique os logs do servidor.' 
         });
       }
+    }
+
+    // Validação da estrutura de resposta
+    if (!data || !data.id || !data.status) {
+      console.error('Resposta da API inválida - campos obrigatórios ausentes:', data);
+      return res.status(500).json({ 
+        error: 'Dados de pagamento incompletos recebidos da API' 
+      });
     }
 
     // Extrai dados necessários da resposta
     const paymentResponse = {
       id: data.id,
       status: data.status,
-      qrCode: data.pixQrCode,
-      qrCodeText: data.pixCode,
-      pixUrl: data.pixQrCode
+      qrCode: data.pix?.qr_code || data.pixQrCode || null,
+      qrCodeText: data.pix?.qr_code_text || data.pixCode || null,
+      pixUrl: data.pix?.url || data.pixQrCode || null
     };
+
+    console.log('Resposta final sendo enviada:', paymentResponse);
 
     // Integração com Utmify se configurado
     if (process.env.UTMIFY_API_TOKEN && data.id) {
