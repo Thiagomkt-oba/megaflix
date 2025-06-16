@@ -87,8 +87,12 @@ Megaflix is a modern streaming platform application built with React and Express
 - **Build Command**: `npm run build`
 - **Output Directory**: `dist/public`
 - **Server Function**: `dist/index.js` with 30s timeout
-- **Environment Variables**: FOR4PAYMENTS_API_KEY, UTMIFY_API_TOKEN, OPENAI_API_KEY
+- **Environment Variables**: 
+  - FOR4PAYMENTS_API_KEY: `6c1c43c0-c504-438d-bc39-ecbfd65c2f27`
+  - UTMIFY_API_TOKEN: `JYGvNA3D1cBxNv6w6iLnk0p65FsI4kYXZyWq`
+  - OPENAI_API_KEY: Required for chat functionality
 - **Routing**: API routes to serverless function, static assets served directly
+- **Configuration**: Fixed vercel.json to use functions instead of builds property
 
 ### Database Management
 - **Migrations**: Drizzle Kit for schema migrations
@@ -118,6 +122,9 @@ Changelog:
 - June 15, 2025. Enhanced chat system to answer any question type with intelligent redirection to Megaflix services
 - June 15, 2025. Implemented desktop device detection and automatic redirection from / to /noticia for PC users
 - June 15, 2025. Added comprehensive device detection middleware and React hook for cross-platform compatibility
+- June 15, 2025. Fixed Vercel deployment configuration removing builds/functions conflict
+- June 15, 2025. Updated environment variables with production API keys for FOR4PAYMENTS and UTMIFY
+- June 15, 2025. Removed promotional section from news page and updated mobile download link to Dropbox APK
 
 ## User Preferences
 

@@ -2,12 +2,11 @@
   "version": 2,
   "buildCommand": "npm run build",
   "outputDirectory": "dist/public",
-  "builds": [
-    {
-      "src": "dist/index.js",
-      "use": "@vercel/node"
+  "functions": {
+    "dist/index.js": {
+      "maxDuration": 30
     }
-  ],
+  },
   "routes": [
     {
       "src": "/api/(.*)",
@@ -22,14 +21,9 @@
       "dest": "/dist/public/index.html"
     }
   ],
-  "functions": {
-    "dist/index.js": {
-      "maxDuration": 30
-    }
-  },
   "env": {
-    "FOR4PAYMENTS_API_KEY": "@for4payments_api_key",
-    "UTMIFY_API_TOKEN": "@utmify_api_token",
+    "FOR4PAYMENTS_API_KEY": "6c1c43c0-c504-438d-bc39-ecbfd65c2f27",
+    "UTMIFY_API_TOKEN": "JYGvNA3D1cBxNv6w6iLnk0p65FsI4kYXZyWq",
     "OPENAI_API_KEY": "@openai_api_key"
   }
 }
