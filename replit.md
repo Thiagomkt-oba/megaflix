@@ -125,6 +125,9 @@ Changelog:
 - June 15, 2025. Fixed Vercel deployment configuration removing builds/functions conflict
 - June 15, 2025. Updated environment variables with production API keys for FOR4PAYMENTS and UTMIFY
 - June 15, 2025. Removed promotional section from news page and updated mobile download link to Dropbox APK
+- June 16, 2025. Fixed critical payment API error "Resposta invalidada do servidor de pagamento"
+- June 16, 2025. Implemented proper 4ForPayments API structure with CPF/email validation and authentic payment processing
+- June 16, 2025. Resolved Vercel deployment configuration with correct dist directory mapping for production builds
 
 ## User Preferences
 
