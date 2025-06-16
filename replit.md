@@ -129,6 +129,8 @@ Changelog:
 - June 16, 2025. Implemented proper 4ForPayments API structure with CPF/email validation and authentic payment processing
 - June 16, 2025. Resolved Vercel deployment configuration with correct dist directory mapping for production builds
 - June 16, 2025. Removed automatic desktop redirection - all devices now access home page directly
+- June 16, 2025. Fixed critical FUNCTION_INVOCATION_FAILED error in Vercel serverless functions by adding CORS headers and correcting 4ForPayments API structure
+- June 16, 2025. Implemented robust error handling to ensure valid JSON responses in all scenarios, preventing HTML error pages in production
 
 ## User Preferences
 
