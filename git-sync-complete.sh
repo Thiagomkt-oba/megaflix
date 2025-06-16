@@ -10,6 +10,9 @@ cp api/create-card-payment.js backup/
 cp vercel.json backup/
 cp replit.md backup/
 
+# Configura repositório remoto se necessário
+git remote set-url origin https://github.com/Thiagomkt-oba/megaflix.git
+
 # Baixa mudanças do repositório remoto
 echo "Baixando mudanças do repositório..."
 git fetch origin

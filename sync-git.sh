@@ -24,6 +24,9 @@ git commit -m "fix: corrige erro de pagamento 'Resposta invalidada do servidor'
 - Corrige configuração Vercel distDir para dist/public
 - Resolve problema de pagamentos PIX e cartão"
 
+# Configura repositório remoto
+git remote set-url origin https://github.com/Thiagomkt-oba/megaflix.git
+
 # Push para o repositório
 echo "🚀 Enviando para Git..."
 git push origin main
