@@ -1,14 +1,24 @@
 #!/bin/bash
-# Build script for Vercel deployment
+set -e
 
-echo "Building frontend with Vite..."
+echo "🚀 Building Megaflix..."
+
+# Build frontend with Vite
+echo "📦 Building frontend..."
 npx vite build
 
-echo "Creating dist directory..."
+# Build backend with esbuild
+echo "⚙️ Building backend..."
+npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+
+# Create dist directory for frontend assets
+echo "📁 Preparing dist directory..."
 mkdir -p dist
 
-echo "Copying frontend files to dist..."
+# Copy frontend assets to dist
+echo "📋 Copying frontend assets..."
 cp -r client/dist/* dist/
 
-echo "Build completed - dist directory created with frontend files"
+# Verify build
+echo "✅ Build complete!"
 ls -la dist/
