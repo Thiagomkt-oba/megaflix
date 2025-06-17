@@ -326,7 +326,12 @@ export default function Checkout() {
         throw new Error(data.error || "Erro ao processar pagamento");
       }
 
-      setPaymentResponse(data);
+      // Adiciona o valor total ao paymentResponse
+      const paymentDataWithAmount = {
+        ...data,
+        amount: getTotalPrice()
+      };
+      setPaymentResponse(paymentDataWithAmount);
 
       if (formData.paymentMethod === "pix") {
         // Mostra modal PIX
