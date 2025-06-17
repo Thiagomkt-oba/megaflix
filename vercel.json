@@ -27,6 +27,11 @@
       "src": "api/setup-webhook.js",
       "use": "@vercel/node",
       "config": { "maxDuration": 30 }
+    },
+    {
+      "src": "api/chat.js",
+      "use": "@vercel/node",
+      "config": { "maxDuration": 30 }
     }
   ],
   "routes": [
@@ -45,6 +50,10 @@
     {
       "src": "/api/setup-webhook",
       "dest": "/api/setup-webhook.js"
+    },
+    {
+      "src": "/api/chat",
+      "dest": "/api/chat.js"
     },
     {
       "src": "/(.*)",
