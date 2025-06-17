@@ -9,15 +9,42 @@
       }
     },
     {
-      "src": "api/index.js",
+      "src": "api/create-pix-payment.js",
+      "use": "@vercel/node",
+      "config": { "maxDuration": 30 }
+    },
+    {
+      "src": "api/create-card-payment.js",
+      "use": "@vercel/node",
+      "config": { "maxDuration": 30 }
+    },
+    {
+      "src": "api/webhook-for4payments.js",
+      "use": "@vercel/node",
+      "config": { "maxDuration": 30 }
+    },
+    {
+      "src": "api/setup-webhook.js",
       "use": "@vercel/node",
       "config": { "maxDuration": 30 }
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/index.js"
+      "src": "/api/create-pix-payment",
+      "dest": "/api/create-pix-payment.js"
+    },
+    {
+      "src": "/api/create-card-payment",
+      "dest": "/api/create-card-payment.js"
+    },
+    {
+      "src": "/api/webhook-for4payments",
+      "dest": "/api/webhook-for4payments.js"
+    },
+    {
+      "src": "/api/setup-webhook",
+      "dest": "/api/setup-webhook.js"
     },
     {
       "src": "/(.*)",
@@ -27,6 +54,6 @@
   "env": {
     "FOR4PAYMENTS_API_KEY": "6c1c43c0-c504-438d-bc39-ecbfd65c2f27",
     "UTMIFY_API_TOKEN": "JYGvNA3D1cBxNv6w6iLnk0p65FsI4kYXZyWq",
-    "OPENAI_API_KEY": ""
+    "OPENAI_API_KEY": "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"
   }
 }
