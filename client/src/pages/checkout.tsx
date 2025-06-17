@@ -326,10 +326,10 @@ export default function Checkout() {
         throw new Error(data.error || "Erro ao processar pagamento");
       }
 
-      // Adiciona o valor total ao paymentResponse
+      // Adiciona o valor total ao paymentResponse (em centavos para o modal)
       const paymentDataWithAmount = {
         ...data,
-        amount: getTotalPrice()
+        amount: calculateTotal() // Mantém em centavos para conversão correta no modal
       };
       setPaymentResponse(paymentDataWithAmount);
 
