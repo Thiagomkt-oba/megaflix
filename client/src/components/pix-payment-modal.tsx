@@ -14,12 +14,23 @@ interface PixPaymentModalProps {
     qrCode?: string;
     qrCodeText?: string;
     pixUrl?: string;
+    amount?: number;
   };
 }
 
 export default function PixPaymentModal({ isOpen, onClose, paymentData }: PixPaymentModalProps) {
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
+
+  // Formatar valor para exibição
+  const formatCurrency = (amount: number) => {
+    return (amount / 100).toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    });
+  };
+
+  const displayAmount = paymentData?.amount ? formatCurrency(paymentData.amount) : "R$ 37,90";
 
   const copyPixCode = async () => {
     if (paymentData?.qrCodeText) {
@@ -77,7 +88,7 @@ export default function PixPaymentModal({ isOpen, onClose, paymentData }: PixPay
               <span className="text-white font-semibold">Pagamento com PIX</span>
             </div>
             <div className="text-right">
-              <span className="text-green-400 font-bold text-lg">R$ 37,90</span>
+              <span className="text-green-400 font-bold text-lg">{displayAmount}</span>
             </div>
           </div>
           
@@ -160,7 +171,7 @@ export default function PixPaymentModal({ isOpen, onClose, paymentData }: PixPay
               <li>2. Escolha a opção "PIX"</li>
               <li>3. Selecione "Pagar com QR Code" ou "Pix Copia e Cola"</li>
               <li>4. Escaneie o código acima OU cole o código copiado</li>
-              <li>5. Confirme o valor de R$ 37,90</li>
+              <li>5. Confirme o valor de {displayAmount}</li>
               <li>6. Autorize o pagamento</li>
             </ol>
           </div>
